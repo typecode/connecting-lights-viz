@@ -1,0 +1,35 @@
+Lab,Strain,Name,Style,Origin,Flocculation,Flocculation (#),Attenuation % (min),Attenuation % (max),Temp (min) (ºF),Temp (max) (ºF),Alcohol Tolerance (ABV),Source,Added By,Date
+White Labs,WLP001,California Ale Yeast,Ale,,Medium,3,73,80,68,73,15,http://www.whitelabs.com/beer/strains_wlp001.html,ZS,7/9/2012
+White Labs,WLP002,English Ale Yeast,Ale,,Very High,6,63,70,65,68,17,http://www.whitelabs.com/beer/strains_wlp002.html,ZS,7/11/2012
+White Labs,WLP003,German Ale Yeast II,Ale,,Medium,3,73,80,65,70,10,http://www.whitelabs.com/beer/strains_wlp003.html,ZS,7/11/2012
+White Labs,WLP004,Irish Ale Yeast,Ale,,Medium to High,4,69,74,65,68,12,http://www.whitelabs.com/beer/strains_wlp004.html,ZS,7/11/2012
+White Labs,WLP005,British Ale Yeast,Ale,,High,5,67,74,65,70,10,http://www.whitelabs.com/beer/strains_wlp005.html,ZS,7/11/2012
+White Labs,WLP006,Bedford British Ale Yeast,Ale,,High,5,72,80,65,70,10,http://www.whitelabs.com/beer/strains_wlp006.html,ZS,7/11/2012
+White Labs,WLP007,Dry English Ale Yeast,Ale,,Medium to High,4,70,80,65,70,12,http://www.whitelabs.com/beer/strains_wlp007.html,ZS,7/11/2012
+White Labs,WLP008,East Coast Ale Yeast,Ale,,Medium to Low,2,70,75,68,73,10,http://www.whitelabs.com/beer/strains_wlp008.html,ZS,7/11/2012
+White Labs,WLP009,Australian Ale Yeast,Ale,,High,5,70,75,65,75,10,http://www.whitelabs.com/beer/strains_wlp009.html,ZS,7/11/2012
+White Labs,WLP011,European Ale Yeast,Ale,,Medium,3,60,70,65,70,10,http://www.whitelabs.com/beer/strains_wlp011.html,ZS,7/11/2012
+Wyeast,WE: 1007,German Ale,Ale,,Low,1,73,77,55,68,11,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=150,ZS,7/9/2012
+Wyeast,WE: 3191,Berliner-Weisse Blend (PC),Ale,Germany,Low,1,73,77,68,72,6,http://www.wyeastlab.com/vssprogram.cfm?website=3,MB,7/12/2012
+Wyeast,WE: 1007,German Ale,Ale,Germany,Low,1,73,77,55,68,11,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=150,MB,7/12/2012
+Wyeast,WE: 1010,American Wheat,Ale,United States,Low,1,74,78,58,74,10,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=126,MB,7/12/2012
+Wyeast,WE: 1028,London Ale,Ale,Britain,Medium to Low,2,73,77,60,72,11,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=4,MB,7/12/2012
+Wyeast,WE: 1056,American Ale,Ale,United States,Medium to Low,2,73,77,60,72,11,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=5,MB,7/12/2012
+Wyeast,WE: 1084,Irish Ale,Ale,Ireland,Medium,3,71,75,62,72,12,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=6,MB,7/12/2012
+Wyeast,WE: 1098,British Ale,Ale,Britain,Medium,3,73,75,64,72,10,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=7,MB,7/12/2012
+Wyeast,WE: 1099,Whitbred Ale,Ale,Britain,Medium to High,4,68,72,64,75,10,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=8,MB,7/12/2012
+Wyeast,WE: 1187,Ringwood Ale,Ale,European,High,5,68,72,64,74,10,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=9,MB,7/12/2012
+Wyeast,WE: 1272,American Ale II,Ale,American,Medium to High,4,72,76,60,72,10,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=11,MB,7/12/2012
+Wyeast,WE: 1275,Thames Valley Ale,Ale,Britain,Medium to Low,3,77,77,62,72,10,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=138,MB,7/12/2012
+Wyeast,WE: 1318,London Ale III,Ale,Britain,High,5,71,75,64,74,10,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=140,MB,7/12/2012
+Wyeast,WE: 1332,Northwest Ale,Ale,United States,high,5,67,71,65,75,10,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=139,MB,7/12/2012
+Wyeast,WE: 1335,British Ale II,Ale,Britain,High,5,73,76,63,75,10,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=141,MB,7/12/2012
+Wyeast,WE: 1450,Denny's Favorite 50,Ale,American,Low,1,74,76,60,70,10,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=201,MB,7/12/2012
+Wyeast,WE: 1469,West Yorkshire Ale,Ale,Britain,High,5,67,71,64,72,9,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=189,MB,7/12/2012
+Wyeast,WE: 1728,Scottish Ale,Ale,Scottland,High,5,69,73,55,75,12,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=143,MB,7/12/2012
+Wyeast,WE: 1968,London ESB Ale,Ale,Britain,Very High,6,67,71,64,72,9,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=22,MB,7/12/2012
+Wyeast,WE: 2565,Kölsch,Ale,Germany,low,1,73,77,56,70,10,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=144,MB,7/12/2012
+Wyeast,WE: 5112,Brettanomyces bruxellensis™,Lambic,Belgium,medium,3,75,85,60,75,12,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=146,MB,7/12/2012
+Wyeast,WE: 5335,Lactobacillus,Lambic,Belgium,medium,3,75,85,60,95,9,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=148,MB,7/12/2012
+Wyeast,WE: 5526,Brettanomyces lambicus™,Lambic,Belgium,medium,3,75,85,60,75,12,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=147,MB,7/12/2012
+Wyeast,WE: 5733,Pediococcus™,Lambic,Belgium,,,,,60,95,9,http://www.wyeastlab.com/rw_yeaststrain_detail.cfm?ID=149,MB,7/12/2012

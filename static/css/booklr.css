@@ -1,0 +1,1165 @@
+/* ============================================================================
+	 ______               __     __       
+	|   __ \.-----.-----.|  |--.|  |.----.
+	|   __ <|  _  |  _  ||    < |  ||   _|
+	|______/|_____|_____||__|__||__||__|  
+
+	Type/Code LLC 2012
+	
+	
+
+	---------------------------------------------------------------------------
+	FONT FAMILIES
+	---------------------------------------------------------------------------
+	/font-family/							/name/
+	'FranklinITCW01-CnLight';				ITC Franklin Light
+	'ITCFranklinGothicW01-Bk 812656'		ITC Franklin Gothic Book
+	'ITCFranklinGothicW01-Bk 812659' 		ITC Franklin Gothic Book italic
+	'ITCFranklinGothicW01-Md 812698' 		ITC Franklin Gothic Medium
+	'ITCFranklinGothicW01-Md 812701' 		ITC Franklin Gothic Medium italic
+	'ITCFranklinGothicW01-Dm 812677' 		ITC Franklin Gothic Demi
+	'ITCFranklinGothicW01-Dm 812680' 		ITC Franklin Gothic Demi italic
+	'ModernPictogramsNormal'				Modern Pictograms
+	
+
+	---------------------------------------------------------------------------
+	Z-INDEX INDEX
+	---------------------------------------------------------------------------
+	/z-index/ 		/name/					/selector(s)/
+	1005			Top bar					.topbar
+	1004			Page header 			.page-header
+	1000 			Status bar 				.statusbar
+	999 			Autocomplete 			.autocomplete
+	999 			Dropdown menu 			.tc-dropdown .menu
+	999				Tooltip					.tooltip
+
+
+	---------------------------------------------------------------------------
+	COLORS
+	---------------------------------------------------------------------------	
+	/name/ 			/hex/ 		/rgb/					/notes/
+	yellow			#ffee55		rgb(255,238,85)			active states, hover, etc.
+	dark yellow 	#3c3708		rgb(60,55,8)			text color against yellow background
+	blue			#6adaff		rgb(106,218,255)		indicates elements related to current page
+	green			#7ae99f		rgb(122,233,159)		highlight states, positive numbers, etc
+
+*/
+
+
+
+/* ============================================================================
+	Base styles
+
+ */
+
+body {
+	overflow: scroll; overflow-x: auto; min-width: 960px;
+	background-color: #2e2e2e;
+	color: #cccccc;
+	text-align: left;
+	font-family: "ITCFranklinGothicW01-Bk 812656";
+	font-size: 14px;
+	-webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+}
+
+h1 {
+	font-size: 36px; line-height: 1; font-family: Georgia, serif;
+	color: #ebebeb; -webkit-font-smoothing: antialiased;
+}
+
+h2 {
+	font-size: 36px; line-height: 1; font-family: Georgia, serif;
+	color: #ebebeb; -webkit-font-smoothing: antialiased;
+}
+
+h3 {
+	font-family: Georgia, serif; font-style: italic;
+	color: #ffee55; -webkit-font-smoothing: antialiased;
+}
+
+h4 {
+	font-size: 16px;
+}
+
+table th {
+	font-weight: normal;
+}
+
+strong {
+	font-family: 'ITCFranklinGothicW01-Dm 812677';
+	font-weight: normal;
+}
+
+a {
+	color: #e1e1e1;
+	cursor: pointer;
+	text-decoration: none;
+	font-family: "ITCFranklinGothicW01-Md 812698";
+}
+a:hover {
+	color: #ffee55;
+	text-decoration: none;
+}
+
+.picto {
+	font-family: 'ModernPictogramsNormal' !important; text-decoration: none;
+}
+
+::-moz-selection { background-color: #ffee55; color: #ebebeb; }
+::selection { background-color: #ffee55; color: #ebebeb; }
+
+
+
+/* ============================================================================
+	Typographic helpers
+
+ */
+
+.value-positive {
+	color: #7ae99f;
+}
+.value-negative {
+
+}
+
+.text-highlight {
+	color: #ffee55;
+}
+
+
+
+/* ============================================================================
+	Layout helpers
+
+ */
+
+/* temporary -- for component lib purposes */
+ .__component__ { clear: both; padding: 30px 16px; }
+ .__component__.nopad { padding: 30px 0; }
+
+/*---------------------------------------------*/
+/* these elements are automatically clearfixed */
+.tier:before,
+.tier:after,
+
+.hd:before,
+.hd:after,
+
+.bd:before,
+.bd:after,
+
+.ft:before,
+.ft:after,
+
+.page-header:before,
+.page-header:after,
+
+.toolbar:before,
+.toolbar:after,
+
+.button-group:before,
+.button-group:after,
+
+.field-box:before,
+.field-box:after,
+
+.tooltip-content:before,
+.tooltip-content:after,
+
+.channel .details:before,
+.channel .details:after { content: ""; display: table; }
+
+.tier:after,
+.hd:after,
+.bd:after,
+.ft:after,
+.page-header:after,
+.toolbar:after,
+.button-group:after,
+.field-box:after,
+.tooltip-content:after,
+.channel .details:after { clear: both; }
+
+.tier,
+.hd,
+.bd,
+.ft,
+.page-header:after,
+.toolbar,
+.button-group,
+.field-box,
+.tooltip-content,
+.channel .details { zoom: 1; }
+/*---------------------------------------------*/
+
+.tier { position: relative; }
+.west { float: left; }
+.east { float: right; }
+.wide-box { width: 60%; float: left; }
+.half-box { width: 50%; float: left; }
+.narr-box { width: 40%; float: left; }
+
+table { width: 100%; }
+
+
+
+/* ============================================================================
+	Fields and buttons
+
+ */
+
+input[type=text],
+input[type=password] {
+	display: inline-block; width: 100%; padding: 6px 8px; 
+	font-size: 14px;  line-height: 1;
+	font-family: Georgia, serif; color: #fff;
+	background-color: #555555; border: 1px solid #707070;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+input[type=text]:focus,
+input[type=password]:focus {
+	border-color: #ffee55;
+}
+
+.tc-field {
+	position: relative;
+}
+
+.tc-field-hint {
+	position: absolute; top: 10px; left: 8px;
+	font-size: 12px; line-height: 1; font-family: Georgia, serif; font-style: italic;
+}
+
+.sexy-control {
+	display: block; float: left; width: 11px; height: 11px;
+	line-height: 1; margin: 3px 4px 0 0; cursor: pointer;
+}
+.sexy-control.state-active {
+	background-position: 0 100%;
+}
+.sexy-control.state-active + label,
+.sexy-control.state-active + input + label {
+	color: #f95726;
+}
+.sexy-checkbox {
+	background-image: url("../images/checkbox.png");
+}
+.sexy-radio {
+
+}
+
+.button {
+	display: inline-block; padding: 8px 10px; line-height: 1;
+	text-transform: uppercase; text-decoration: none;
+	color: #cccccc; background-color: #000000;
+	border: 1px solid #787878; border-radius: 5px;
+}
+.button.state-highlight {
+	color: #7ae99f;
+}
+.button:hover { 
+	background-color: #ffee55; color: #3c3708; color: rgba(60,55,8,0.9); border-color: #ffee55;
+}
+.button .picto { 
+	font-size: 125%; line-height: 0; margin-right: 6px; opacity: 0.75;
+}
+
+.pill-button {
+	display: inline-block; line-height: 1; padding: 4px 15px; border-radius: 13px;
+	background-color: #767676; color: #3e3e3e;
+	text-transform: uppercase; text-decoration: none;
+}
+.pill-button.state-active,
+.pill-button:hover {
+	background-color: #ffee55; color: #3e3e3e;
+}
+
+.x-button {
+	display: inline-block; line-height: 0; color: #898989;
+}
+.x-button.lg {
+	font-size: 24px; height: 0;
+}
+.x-button.sm {
+	font-size: 16px; height: 0;
+}
+
+.text-button {
+	display: inline-block;
+}
+.text-button.state-active {
+	color: #ffee55;
+}
+.text-button > span {
+	border-bottom: 1px solid;
+}
+.text-button:hover > span,
+.text-button.state-active > span,
+.text-button > span.sym {
+	border-bottom: none;
+}
+
+.search.tc-field input[type=text] {
+	width: 240px; padding-right: 22px;
+}
+.search.tc-field .icon {
+	display: block; position: absolute; top: 50%; right: 8px;
+	width: 15px; height: 15px; margin-top: -8px;
+	background-image: url("../images/icon_search.png");
+	background-position: center; background-color: #555555;
+}
+
+.autocomplete {
+	position: absolute; top: 100%; left: 0; right: 0; z-index: 999;
+	background-color: rgba(24, 24, 24, .9); 
+	border: 1px solid #4d4d4d; border-top: 0;
+	box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+}
+.autocomplete .item {
+	padding: 6px 8px; border-bottom: 1px solid #262626;
+	line-height: 1.1; color: #cccccc;
+	cursor: pointer;
+}
+.autocomplete .item h4 { 
+	font-size: 14px; height: 15px; overflow: hidden; 
+}
+.autocomplete .item .format {
+	font-size: 11px; color: #898989; float: right; margin-top: 2px; margin-left: 6px;
+}
+.autocomplete .item:hover {
+	background-color: #ffee55; color: #3c3708;
+}
+.autocomplete .item:hover .format { 
+	color: rgba(60,55,8,0.7); 
+}
+
+.tc-dropdown {
+	float: left; width: 100%;
+}
+.tc-dropdown .display {
+	cursor: pointer; overflow: hidden; white-space: nowrap; line-height: 1;
+}
+.tc-dropdown .trigarr {
+	position: absolute; cursor: pointer;
+}
+.tc-dropdown .menu {
+	position: absolute; top: 100%; left: 0; right: 0; z-index: 999;
+}
+.tc-dropdown .item {
+	cursor: pointer;
+}
+
+/* basic dropdowns */
+.tc-dropdown.basic .display {
+	font-size: 18px; padding: 7px 28px 7px 10px;
+	border: 1px solid #777777; background-color: #595959;
+}
+.tc-dropdown.basic .trigarr {
+	top: 50%; margin-top: -3px; right: 10px;
+	width: 9px; height: 5px;
+	background-image: url("../images/dropdown_arrow.png");
+}
+.tc-dropdown.basic .menu {
+	background-color: rgba(24, 24, 24, .9); 
+	border: 1px solid #4d4d4d; border-top: 0;
+	box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+}
+.tc-dropdown.basic .item {
+	padding: 3px 10px; line-height: 1.1;
+	border-bottom: 1px solid #262626;
+}
+.tc-dropdown.basic .item:hover {
+	background-color: #ffee55; color: #3c3708;
+}
+
+/* facet selector dropdowns */
+.tc-dropdown.facet-select .display {
+	padding: 3px 16px 3px 6px; /*border-bottom: 1px solid rgba(255,255,255,0.15);*/
+	text-decoration: underline; border: 1px solid transparent;
+	font-family: 'ITCFranklinGothicW01-Bk 812659';
+}
+.tc-dropdown.facet-select.state-open .display {
+	background-color: rgba(24, 24, 24, .9);
+	border: 1px solid #4d4d4d; border-bottom: 0;
+}
+.tc-dropdown.facet-select:hover .display,
+.tc-dropdown.facet-select:hover .trigarr,
+.tc-dropdown.facet-select.state-open .display,
+.tc-dropdown.facet-select.state-open .trigarr {
+	color: #ffee55;
+}
+.tc-dropdown.facet-select:hover .display {
+	border-bottom-color: transparent;
+}
+.tc-dropdown.facet-select .trigarr {
+	top: 4px; right: 5px; line-height: 1;
+}
+.tc-dropdown.facet-select .menu {
+	padding-top: 3px; background-color: rgba(24, 24, 24, .9); 
+	border: 1px solid #4d4d4d; border-top: 0;
+	box-shadow: 0 0 15px rgba(0, 0, 0, .2);	
+}
+.tc-dropdown.facet-select .item {
+	padding: 6px; line-height: 1.1;
+	border-bottom: 1px solid #262626;
+}
+.tc-dropdown.facet-select .item:hover {
+	background-color: #ffee55; color: #3c3708;
+}
+
+.field-box label {
+	display: block;
+}
+
+.field-table tr {
+	border-top: 1px solid #454545;
+}
+.field-table td {
+	padding: 10px; vertical-align: middle;
+}
+.field-table td.nopad { padding: 0; }
+.field-table .button-group {
+	text-align: center;
+}
+
+
+
+/* ============================================================================
+	Loaders and masks
+
+ */
+
+.inner-page-loader {
+	position: absolute; top: 8px; right: 20px;
+}
+
+.inner-page-mask {
+	position: fixed; top: 0; left: 0;
+	width: 100%; height: 100%; background-color: #2e2e2e;
+}
+
+
+
+/* ============================================================================
+	Toolbars
+
+ */
+
+.toolbar {
+	float: right;
+}
+.toolbar > div {
+	padding: 5px 16px;
+}
+.toolbar > .east {
+	margin-left: 16px; border-left: 1px solid #404040;
+}
+
+.button-group .button {
+	margin-left: 10px;
+}
+.button-group .button:first-child {
+	margin-left: 0;
+}
+
+.tools {
+	float: right;
+}
+.tools a.picto {
+	font-size: 22px;
+}
+
+
+
+/* ============================================================================
+	Overlays
+
+ */
+
+.mask {
+	background-color: #333333;
+	opacity: 0.5;
+}
+
+.overlay {
+	
+}
+
+.overlay .pane {
+	padding: 27px 19px; width: 460px;
+	background-color: #333333; border: 1px solid #959595; border-top: 0;
+	border-radius: 0 0 2px 2px;
+	box-shadow: 0 15px 25px rgba(0, 0, 0, .3);
+}
+
+.overlay .pane > .hd {
+	padding: 0 0 15px; border-bottom: 1px solid #7a7a7a;
+}
+
+.overlay h3 {
+	font-size: 30px; line-height: 1;
+}
+
+.overlay .field-box {
+	padding: 0 0 20px;
+}
+.overlay .field-box label {
+	line-height: 1; margin: 10px 0;
+	font-size: 18px; color: #c2c2c2;
+}
+.overlay .pane .text-button {
+	/*color: #5e5e5e;*/
+}
+
+.overlay .pane > .ft {
+	padding: 15px 0 0; border-top: 1px solid #7a7a7a;
+}
+.overlay .pane > .ft .button-group {
+	text-align: center;
+}
+
+
+
+/* ============================================================================
+	Tooltips
+
+ */
+
+.tooltip {
+	width: 250px; /*position: absolute;*/position: relative;
+	z-index: 999;
+}
+.tooltip .tooltip-content {
+	padding: 7px; border: 1px solid #707070; border-radius: 1px;
+	background-color: rgba(24, 24, 24, .9); color: #cccccc;
+}
+
+.tooltip-tail-container.top .tooltip-tail {
+	width: 21px; height: 10px; background-image: url("../images/tooltip_top_tail.png");
+	top: -1px; left: 7px;
+}
+
+
+
+/* ============================================================================
+	Tab panes
+
+ */
+
+.tab-pane > .hd {
+	position: relative;
+}
+.tab-pane > .hd .info {
+	position: absolute; bottom: 10px; right: 3px; 
+	font-size: 18px; line-height: 1; color: #636363;
+	font-family: 'ITCFranklinGothicW01-Bk 812656';
+}
+
+.tab-pane .tabs > li {
+	float: left;
+}
+.tab-pane .tabs > li > a {
+	display: block; position: relative; top: 1px; line-height: 1; padding: 10px 25px;
+	border: 1px solid #494949; border-left: 0; background-color: #292929;
+	text-decoration: none; font-size: 18px;
+}
+.tab-pane .tabs > li.state-active > a {
+	border-bottom-color: #2e2e2e; background-color: #2e2e2e;
+}
+
+.tab-pane .panes {
+	clear: both;
+}
+.tab-pane .panes > div {
+	display: none; padding: 8px; border-top: 1px solid #494949;
+}
+.tab-pane .panes > div.state-active {
+	display: block;
+}
+
+
+
+/* ============================================================================
+	Thumbnails
+
+ */
+
+.thumb {
+	float: left; margin: 0 7px 7px 0;
+	border: 1px solid #7a7a7a;
+}
+.thumb img {
+	display: block; line-height: 1;
+}
+
+
+
+/* ============================================================================
+	Rating stars
+
+ */
+
+.star-group {
+	overflow: hidden;
+}
+.star {
+	display: block; float: left; width: 17px; height: 16px;
+	background-image: url("../images/stars.png");
+}
+.star.state-half {
+	background-position: 0 -16px;
+}
+.star.state-full {
+	background-position: 0 -32px;
+}
+
+.tooltip-content .star {
+	background-position: -17px 0;
+}
+.tooltip-content .star.state-half {
+	background-position: -17px -16px;
+}
+.tooltip-content .star.state-full {
+	background-position: -17px -32px;
+}
+
+
+
+/* ============================================================================
+	Stats table
+
+ */
+
+.stats > tbody > tr > td {
+	vertical-align: middle;
+}
+.stats thead th,
+.stats td h4 {
+	font-family: 'ITCFranklinGothicW01-Dm 812677'; color: #898989;
+	font-size: 14px;
+}
+.stats td h4 {
+	display: inline-block; margin-right: 15px;
+}
+.stats td .stat {
+	display: inline-block;
+	line-height: 16px;
+}
+.stats td .stat .biggie {
+	font-size: 18px;
+}
+.stats td .stat .tc-dropdown.facet-select {
+	float: none;
+}
+
+
+
+/* ============================================================================
+	Statlist table
+
+ */
+
+.statlist td .tc-field.checkbox,
+.statlist td .tc-field.radio {
+	float: left;
+}
+.statlist td .tc-field.checkbox + span,
+.statlist td .tc-field.radio + span {
+	margin-left: 1ex;
+}
+
+
+
+/* ============================================================================
+	Library table
+
+ */
+
+.library-table-wrap {
+	padding: 20px 0 0;
+}
+
+.library-table th,
+.library-table td {
+	padding: 6px 6px 7px;
+	font-family: 'ITCFranklinGothicW01-Bk 812656';
+	color: #c2c2c2;
+}
+
+.library-table th:first-child,
+.library-table td:first-child {
+	border-left-color: transparent;
+}
+.library-table th:last-child,
+.library-table td:last-child {
+	border-right-color: transparent;
+}
+
+.library-table tr th,
+.library-table tr td {
+	border-top: 1px solid #535353;
+	border-bottom: 1px solid #535353;
+	border-left: 1px solid #404040;
+	border-right: 1px solid #404040;
+}
+
+.library-table thead tr th {
+	border-top: 0;
+	cursor: pointer;
+	font-family: 'ITCFranklinGothicW01-Dm 812677';
+}
+
+.library-table tr th:first-child,
+.library-table tr td:first-child {
+	width: 36px; text-align: right;
+}
+
+.library-table tbody {
+	font-size: 16px; line-height: 1; color: #cccccc;
+}
+
+.library-table tbody th {
+	font-family: 'ITCFranklinGothicW01-Bk 812656';
+	text-align: right; color: #636363;
+}
+.library-table .x-button {
+	display: none; position: relative; top: 2px; right: 2px;
+	font-size: 21px; color: #898989;
+}
+.library-table tr:hover .x-button {
+	display: block;
+}
+.library-table tr:hover th .num {
+	display: none;
+}
+
+.library-table tbody tr:hover th,
+.library-table tbody tr:hover td {
+	background-color: #3e3e3e;
+	border-left-color: #3e3e3e;
+	border-right-color: #3e3e3e;
+}
+
+.library-table a {
+	color: #e1e1e1; text-decoration: none; font-family: "ITCFranklinGothicW01-Md 812698";
+	cursor: pointer; 
+	/*border-bottom: 1px solid rgba(255,255,255,0.07);*/
+}
+.library-table a:hover {
+	color: #ffee55;
+	/*border-bottom: none;*/
+}
+
+
+
+/* ============================================================================
+	Widget
+
+ */
+
+.widget {
+	padding: 16px;
+}
+.widget > .hd {
+	position: relative; padding: 5px 3px; border-bottom: 1px solid #7d7d7d;
+}
+.widget > .hd h4 {
+	font-family: 'ITCFranklinGothicW01-Dm 812677';
+	font-size: 14px; color: #ffffff;
+	line-height: 1;
+}
+.widget > .hd h4 small {
+	font-size: 12px; margin-left: 1ex;
+}
+.widget > .hd .info {
+	position: absolute; bottom: 5px; right: 3px; line-height: 1;
+	color: #acacac;
+}
+
+.widget > .bd {
+	padding: 10px 0;
+}
+
+
+
+/* ============================================================================
+	Tag cloud
+
+ */
+
+.tag-cloud .tag {
+	margin-right: 10px;
+	font-family: "ITCFranklinGothicW01-Md 812698";
+}
+.tag-cloud .tag .count {
+	font-size: 12px; color: #7d7d7d;
+}
+
+
+
+/* ============================================================================
+	Channel list
+
+ */
+
+.channel-list {
+	position: relative;
+}
+.channel-list .channel {
+	margin: 2px 0 0; padding: 6px 9px; border-left: 15px solid;
+	background-color: #4c4c4c;
+}
+.channel-list .channel:first-child {
+	margin-top: 0;
+}
+.channel-list .channel h4 {
+	font-family: 'ITCFranklinGothicW01-Dm 812677';
+	display: inline-block;
+}
+.channel-list .channel .x-button {
+	position: relative; top: -3px;
+}
+.channel-list .channel .details > .east {
+	margin-left: 9px; border-left: 1px solid #5d5d5d; padding-left: 7px;
+}
+
+.channel-list .ft .tabs > li > a {
+	padding: 3px 10px 5px; font-size: 13px;
+}
+.channel-list .ft .tabs > li > a > span {
+	text-decoration: underline;
+}
+.channel-list .ft .tabs > li > a > span.picto {
+	text-decoration: none;
+}
+
+
+
+/* ============================================================================
+	Chart controls
+
+ */
+
+.chart-controls {
+	position: absolute; top: 0; right: 0; line-height: 1; padding: 8px 0;
+	font-size: 12px;
+}
+.chart-controls > div {
+	display: inline-block; padding: 2px 12px; border-left: 1px solid #363636;
+}
+.chart-controls > div:first-child {
+	border-left: 0;
+}
+
+
+/* ============================================================================
+	Chart plot
+
+ */
+
+.chart-plot {
+	border-left: 1px solid #666262;
+}
+
+
+
+/* ============================================================================
+	Chart container
+
+ */
+
+.chart-wrap {
+	height: 240px; border: 1px solid #747474; border-width: 1px 0;
+}
+
+.chart-wrap .channel-list {
+	width: 270px; height: 100%; float: left;
+}
+.chart-wrap .channel-list > .ft {
+	position: absolute; bottom: 0; left: 0; width: 100%;
+}
+
+.chart-wrap .chart-plot {
+	height: 100%; margin-left: 270px;
+}
+
+
+
+/* ============================================================================
+	Item stack
+
+ */
+
+.item-stack .item {
+	margin: 10px 0 0; border: 1px solid #535353;
+}
+.item-stack .item:first-child {
+	margin-top: 0;
+}
+
+.item-stack .item > .hd {
+	padding: 10px 12px;
+}
+.item-stack .item > .hd h3 {
+	float: left; font-size: 22px; line-height: 1; font-style: normal;
+	font-family: "ITCFranklinGothicW01-Md 812698";
+}
+.item-stack .item > .hd h3 a {
+	color: #6adaff; border-bottom: 1px solid #6adaff;
+}
+.item-stack .item > .hd h4 {
+	float: left; margin-left: 10px;
+	color: #877c7c; line-height: 22px;
+}
+
+.item-stack .item > .bd {
+	padding: 10px 12px; background-color: #3b3b3b;
+}
+
+.item-stack .stats thead th {
+	
+}
+
+/* ============================================================================
+	Ranking categories
+
+ */
+
+.ranking-categories h4,
+.ranking-categories .stat {
+	font-size: 12px; color: #c2c2c2;
+}
+.ranking-categories .stat .biggie,
+.ranking-categories .stat .tc-field {
+	color: #e1e1e1;
+}
+.ranking-categories .stat .tc-field {
+	display: inline-block;
+}
+
+
+
+/* ============================================================================
+	Title info
+
+ */
+
+.title-info {
+	padding: 16px;
+}
+
+.title-info .thumb {
+	margin: 0 12px 0 0;
+}
+
+.title-info .mainbox {
+	overflow: hidden;
+}
+
+.title-info h2 {
+	line-height: 1; margin: 0 0 14px;
+	font-family: "ITCFranklinGothicW01-Md 812698"; font-size: 24px;
+	color: #6adaff;
+}
+
+.title-info .description {
+	margin: 8px 0 0; font-size: 12px; line-height: 14px;
+}
+.title-info .description strong {
+	color: #959595; margin-right: 1ex;
+}
+
+
+
+/* ============================================================================
+	Retailer info
+
+ */
+
+.retailer-info {
+	padding: 16px;
+}
+
+
+/* ============================================================================
+	Mini-profile
+
+ */
+
+.mini-profile {
+	font-size: 11px; line-height: 1.2;
+}
+.mini-profile .tier {
+	padding: 3px 0; border-top: 1px solid #373737;
+}
+.mini-profile .tier:first-child {
+	padding-top: 0; border-top: 0;
+}
+
+.mini-profile .thumb + div {
+	overflow: hidden;
+}
+
+.mini-profile h4 {
+	font-size: 14px; padding: 0 0 2px;
+}
+.mini-profile .stat .biggie {
+	font-size: 18px; display: block;
+}
+.mini-profile .ranking-categories .stat {
+	font-size: 11px;
+}
+
+
+
+
+/* ============================================================================
+	Top bar
+
+ */
+
+.topbar {
+	position: fixed; left: 0; top: 0; z-index: 1005; width: 100%; 
+	-webkit-font-smoothing: antialiased;
+	-webkit-box-shadow:  0px 0px 40px 0px rgba(0, 0, 0, .3);
+	box-shadow:  0px 0px 40px 0px rgba(0, 0, 0, .3);
+	background-color: #ebebeb;
+	background: rgb(244,244,244);
+	background: -moz-linear-gradient(top,  rgba(244,244,244,1) 0%, rgba(226,226,226,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(244,244,244,1)), color-stop(100%,rgba(226,226,226,1)));
+	background: -webkit-linear-gradient(top,  rgba(244,244,244,1) 0%,rgba(226,226,226,1) 100%);
+	background: -o-linear-gradient(top,  rgba(244,244,244,1) 0%,rgba(226,226,226,1) 100%);
+	background: -ms-linear-gradient(top,  rgba(244,244,244,1) 0%,rgba(226,226,226,1) 100%);
+	background: linear-gradient(top,  rgba(244,244,244,1) 0%,rgba(226,226,226,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#e2e2e2',GradientType=0 );
+}
+
+.topbar .logo a {
+	display: block; position: absolute; left: 0; top: 0;
+	width: 99px; height: 17px; padding: 12px 16px;
+	background-image: url("../images/logo_lg.png");
+	background-position: center 14px;
+}
+
+.top-nav > ul > li {
+	float: left; border-left: 1px solid #a1a1a1;
+}
+.top-nav > ul > li > a {
+	display: block; padding: 10px 25px 14px 20px; line-height: 1;
+	border-left: 1px solid #e4e4e4;
+	font-family:'FranklinITCW01-CnLight'; font-size: 24px;
+	text-transform: uppercase; text-decoration: none; color: #636363; color: rgba(99,99,99,0.9);
+}
+.top-nav > ul > li > a .picto { 
+	font-size: 125%; line-height: 0; margin-right: 9px; opacity: 0.75; 
+}
+.top-nav > ul > li.state-active,
+.top-nav > ul > li:hover {
+	background-color: #ffee55; 
+}
+.top-nav > ul > li.state-active > a,
+.top-nav > ul > li:hover > a {
+	color: #3c3708; color: rgba(60,55,8,0.9); border-left-color: #ffee55;
+	background: -moz-linear-gradient(top,  rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.07) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.2)), color-stop(100%,rgba(0,0,0,0.07)));
+	background: -webkit-linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(0,0,0,0.07) 100%);
+	background: -o-linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(0,0,0,0.07) 100%);
+	background: -ms-linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(0,0,0,0.07) 100%);
+	background: linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(0,0,0,0.07) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33ffffff', endColorstr='#12000000',GradientType=0 );
+}
+.top-nav > ul > li:hover > a {
+	opacity: 0.65;
+}
+.top-nav > ul > li.state-active:hover > a {
+	opacity: 1;
+}
+
+
+
+/* ============================================================================
+	Inner page
+
+ */
+
+.app-wrap .inner-page.tier {
+	margin: 50px 0 0; padding: 0 0 50px;
+}
+
+.app-wrap .inner-page.tier .inner-page-content {
+	padding: 62px 0 0;
+}
+
+
+
+/* ============================================================================
+	Page header
+
+ */
+
+.page-header {
+	padding: 8px 16px; background: #2e2e2e; border-bottom: 3px solid #cccccc;
+	position: fixed; top: 50px; left: 0; right: 0; z-index: 1004; /* do NOT set width:100%, this has padding */
+	-webkit-box-shadow:  0px 0px 15px 10px #2E2E2E;
+	box-shadow:  0px 0px 15px 10px #2E2E2E;
+}
+.page-header h1 {
+	color: #6adaff;
+}
+.page-header h1,
+.page-header .breadcrumbs {
+	display: inline; line-height: 36px;
+}
+.page-header .breadcrumbs {
+	font-size: 24px; font-family: Georgia, serif; color: #969696;
+	color: #ebebeb; -webkit-font-smoothing: antialiased;
+}
+.page-header .breadcrumbs a {
+	color: #969696; font-family: Georgia, serif;
+	text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.page-header .breadcrumbs a:hover {
+	color: #ffee55; border-bottom: none;
+}
+
+.page-header .toolbar > .east {
+	 padding-right: 0;
+}
+
+
+
+/* ============================================================================
+	Status
+
+ */
+
+.statusbar {
+	position: fixed; left: 0; bottom: 0; z-index: 1000; width: 100%;
+	border-top: 1px solid #616161;
+	font-family: "ITCFranklinGothicW01-Bk 812656";
+	color: #707070; background-color: #2e2e2e;
+	-webkit-box-shadow:  0px 0px 15px 10px #2E2E2E;
+	box-shadow:  0px 0px 15px 10px #2E2E2E;
+}
+.statusbar a {
+	color: #707070; text-decoration: underline; font-family: "ITCFranklinGothicW01-Bk 812656";
+}
+.statusbar a:hover {
+	color: #ffee55; text-decoration: none;
+}
+.statusbar > .west,
+.statusbar > .east {
+	padding: 2px 10px 3px;
+}
+
+.statusbar .booklr-info {
+	font-size: 12px;
+}
+
+

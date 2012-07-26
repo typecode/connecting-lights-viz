@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Prototyping</title>
+		<link rel="stylesheet" href="static/css/reset.css">
+		<link rel="stylesheet" href="static/css/booklr.css">
+		<link rel="stylesheet" href="static/css/connected_lights.css">
+
+		<!-- Type/Code Libraries -->
+		<script type='text/javascript' src='static/js/lib/typecode-js/lib/tc.seed.js'></script>
+
+		<!-- Application Page -->
+		<script type='text/javascript'>
+			window.console = NI.app.getConsole(true);
+			window.page = {
+				modules: {},
+				features: []
+			};
+			window.onunload = function(){}; // fixes back-button problems in safari and ff
+		</script>
+
+
+	</head>
+
+	<body>
+		<div id='application' class="app-wrap">
+		
+		</div>
+
+		<!-- jQuery & Other Libraries -->
+		<script src='static/js/lib/jquery-1.7.2.min.js'></script>
+
+		<!-- d3.js -->
+		<script src='static/js/lib/d3/d3.v2.js'></script>
+
+		<!-- Type/Code Libraries -->
+		<script src='static/js/lib/typecode-js/lib/tc.app.js'></script>
+		<script src='static/js/lib/typecode-js/lib/tc.overlay.js'></script>
+
+		<!-- Site-wide Application Modules -->
+		
+		
+		<!-- Application -->
+		<script type='text/javascript'>
+			
+			jQuery(document).bind('ready',function(){
+				window.app = new NI.App({
+					page: window.page,
+					inner_page: window.inner_page
+				});
+
+			});
+		</script>
+
+	</body>
+</html>
