@@ -1,0 +1,37 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.233929, 55.034556, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.231481, 55.034773, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.228991, 55.035097, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.226332, 55.035281, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.223764, 55.035589, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.221399, 55.035806, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.218957, 55.036145, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.216304, 55.036343, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.213691, 55.036644, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.210940, 55.036896, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.208242, 55.037200, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.205575, 55.037400, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.202935, 55.037583, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.200166, 55.037952, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.197673, 55.038712, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S5", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.194952, 55.038905, 0.000000 ] } }
+
+]
+}

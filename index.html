@@ -26,6 +26,7 @@
 	<body>
 		<div id='application' class="app-wrap">
 		
+			<p id='frame-id'></p>
 		</div>
 
 		<!-- jQuery & Other Libraries -->
@@ -34,22 +35,187 @@
 		<!-- d3.js -->
 		<script src='static/js/lib/d3/d3.v2.js'></script>
 
+		<!-- three.js -->
+		<script src='static/js/lib/three.js/build/Three.js'></script>
+
+		<!-- d3-threeD -->
+		<script src='static/js/lib/d3-threeD/lib/d3-threeD.js'></script>
+
+		<!-- geo-util from http://www.smartjava.org/examples/threed3s/ -->
+		<script src='static/js/lib/geo-util.js'></script>
+
 		<!-- Type/Code Libraries -->
 		<script src='static/js/lib/typecode-js/lib/tc.app.js'></script>
 		<script src='static/js/lib/typecode-js/lib/tc.overlay.js'></script>
 
 		<!-- Site-wide Application Modules -->
+
+		<!-- Application -->
+		<script type='text/javascript'>
+
+		</script>
 		
 		
 		<!-- Application -->
 		<script type='text/javascript'>
+
+			var Viz_One = function(options) {
+					
+				var o, internal, elements, fn, handlers;
+				
+				o = $.extend({
+					app:null,
+					$e:null,
+					selector:'',
+					width: 600,
+					height: 600
+				}, options);
+				
+				internal = {
+					name:'Module.Viz_One',
+					$e:(o.$e ? o.$e : $(o.selector)),
+
+					renderer: null,
+					camera: null,
+					scene: null,
+
+					//camera position stuff
+					view_angle: 30,
+					aspect: (o.width / o.height),
+					near: 0.1,
+					far: 10000,
+
+					//scene stuff
+					light: new THREE.PointLight(0xffffff),
+					plane: {
+						geo: new THREE.PlaneGeometry(500, 500, 10, 10),
+						mat: new THREE.MeshLambertMaterial({color: 0xfafafa}),
+						plane: null
+					},
+
+					wall:{
+						material: new THREE.LineBasicMaterial({color: 0xff0000}),
+						geometry: [],
+						lines: []
+					}
+				};
+
+				elements = {
+					frame_id: $('#frame-id')
+				};
+
+				fn = {
+					init: function(){
+						console.log('init');
+						internal.renderer = new THREE.CanvasRenderer({clearAlpha:1});
+						internal.renderer.setSize(o.width, o.height);
+						internal.$e.append(internal.renderer.domElement);
+
+						internal.scene = new THREE.Scene();
+
+						internal.camera = new THREE.PerspectiveCamera(internal.view_angle, internal.aspect, internal.near, internal.far);
+						internal.camera.position.z = 5;
+						internal.camera.position.x = 0;
+						internal.camera.position.y = 0;
+						internal.camera.lookAt( internal.scene.position );
+						internal.scene.add(internal.camera);
+
+						internal.light.position.x = 800;
+						internal.light.position.y = 800;
+						internal.light.position.z = 800;
+						internal.scene.add(internal.light);
+
+						internal.plane.plane = new THREE.Mesh(internal.plane.geo, internal.plane.mat);
+						//internal.scene.add(internal.plane.plane);
+					},
+
+					add_wall: function(){
+						jQuery.getJSON('static/data/hadrians-wall.json', function(d){
+							var i, j, my_feature, my_feature_intermediate_path, my_feature_path, my_feature_shape, my_feature_3d;
+
+							internal.wall.material.linewidth = 2;
+
+							for(i = 0; i < d.features.length; i++){
+								my_feature = d.features[i];
+								my_feature_intermediate_path = geo.path(my_feature);
+								my_feature_shape = transformSVGPathExposed(my_feature_intermediate_path);
+								my_feature_points = my_feature_shape.extractPoints();
+								my_feature_geometry = new THREE.Geometry();
+								for(j = 0; j < my_feature_points.shape.length; j++){
+									my_feature_geometry.vertices.push(new THREE.Vector3(my_feature_points.shape[j].x - 476, my_feature_points.shape[j].y - 158, 0));
+								}
+								internal.wall.geometry.push(my_feature_geometry);
+								
+							}
+
+							for(i = 0; i < internal.wall.geometry.length; i++){
+								internal.wall.lines[i] = new THREE.Line(internal.wall.geometry[i], internal.wall.material)
+								internal.scene.add(internal.wall.lines[i]);
+							}
+						});
+					},
+
+					add_balloons: function(){
+						jQuery.getJSON('static/data/S12.json', function(d){
+							var i, my_feature, my_feature_intermediate_path, my_feature_shape;
+							for(i = 0; i < d.features.length; i++){
+								my_feature = d.features[i];
+								my_feature_intermediate_path = geo.path(my_feature);
+								console.log(my_feature_intermediate_path);
+								my_feature_shape = transformSVGPathExposed(my_feature_intermediate_path);
+								console.log(my_feature_shape);
+							}
+						});
+					},
+
+					animate: function(){
+						internal.animation_frame_id = requestAnimationFrame( fn.animate );
+						fn.draw();
+					},
+
+					draw: function(){
+						elements.frame_id.text(internal.animation_frame_id);
+						internal.renderer.render(internal.scene, internal.camera);
+					}
+				};
+
+				handlers = {
+					keypress: function(e, d){
+						if(e.which == 112){ // 'p'
+							if(internal.animation_frame_id){
+								cancelAnimationFrame(internal.animation_frame_id);
+								internal.animation_frame_id = null;
+							} else {
+								internal.animation_frame_id = requestAnimationFrame(fn.animate);
+							}
+						}
+					}
+				};
+
+				jQuery(window).bind('keypress', {}, handlers.keypress);
+
+				o.app.events.bind('app.featuresInitialized', {}, function(){
+					fn.init();
+					fn.add_wall();
+					fn.add_balloons();
+					fn.animate();
+				});
+				
+				console.log(internal);
+
+			};
+
+			window.page.features.push(function(app){
+				app.runtime.viz = new Viz_One({
+					app: app,
+					$e: $('#application')
+				});
+			});
 			
 			jQuery(document).bind('ready',function(){
 				window.app = new NI.App({
-					page: window.page,
-					inner_page: window.inner_page
+					page: window.page
 				});
-
 			});
 		</script>
 

@@ -1,0 +1,33 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "Name": "HDN", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.787500, 54.997018, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "HDN", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.784737, 54.996763, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "HDN", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.782085, 54.996402, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "HDN", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.779324, 54.996466, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "HDN", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.776557, 54.996338, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "HDN", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.773739, 54.996253, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "HDN", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.770998, 54.996071, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "HEDDON SECTION", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.804959, 54.999301, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "HEDDON SECTION", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.768343, 54.995973, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "HDN", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.790494, 54.997342, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "HDN", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.793329, 54.997736, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "HDN", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.796156, 54.998157, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "HDN", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.798800, 54.998665, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "HDN", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.801917, 54.999037, 0.000000 ] } }
+
+]
+}

@@ -1,0 +1,95 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.578626, 54.989586, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.675976, 54.974213, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.674238, 54.974133, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.672015, 54.973889, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.670111, 54.974445, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.667792, 54.974788, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.665547, 54.975397, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.663224, 54.975849, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.661029, 54.976405, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.658985, 54.977106, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.656771, 54.977655, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.654346, 54.978253, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.652096, 54.978872, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.649683, 54.979451, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.647469, 54.980048, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.645029, 54.980656, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.638406, 54.982393, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.642672, 54.981241, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.640291, 54.981895, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.636190, 54.983061, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.634029, 54.983852, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.631560, 54.984531, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.629137, 54.984955, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.626574, 54.985366, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.624040, 54.985817, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.621529, 54.986313, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.596296, 54.990749, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.619005, 54.986732, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.616571, 54.987273, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.614092, 54.987847, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.611627, 54.988394, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.609164, 54.988922, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.606675, 54.989497, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.604235, 54.990081, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.601600, 54.990367, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.599015, 54.990535, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "CL S9 PARKING POINT", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.579112, 54.989175, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.581212, 54.990114, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.583697, 54.990724, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.587740, 54.991957, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "BOTTOM OF THE DIP" }, "geometry": { "type": "Point", "coordinates": [ -2.590893, 54.991548, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.594516, 54.991020, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "CL S9 PARKINGPOINT", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.600139, 54.991234, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "CL S9 PARKING POINT", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.664529, 54.975552, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S9", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.585826, 54.991315, 0.000000 ] } }
+
+]
+}

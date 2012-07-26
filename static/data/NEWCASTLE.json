@@ -1,0 +1,25 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "Name": "Newcastle section2", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.610352, 54.968786, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S2", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.610860, 54.969241, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S2", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.611767, 54.968988, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S2", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.612535, 54.969018, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S2", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.613251, 54.969281, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S2", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.614025, 54.969571, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S2", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.614827, 54.969712, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S2", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.615583, 54.969835, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S2", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.616384, 54.969897, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S2", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.617182, 54.969976, 0.000000 ] } }
+
+]
+}

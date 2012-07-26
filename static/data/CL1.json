@@ -1,0 +1,19 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "Name": "branch wall south end", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.527770, 54.985991, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "Branch wall north end", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.530341, 54.987052, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "Cavalry barracks", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.531413, 54.987518, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "West gate south guard chamber", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.532643, 54.988267, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "HW site east end", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.533981, 54.987584, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "Segedunum HQ", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.531071, 54.988212, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "HW site west end", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.535185, 54.987276, 0.000000 ] } }
+
+]
+}

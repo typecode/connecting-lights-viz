@@ -1,0 +1,13 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "Name": "A69 start", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.694911, 54.985033, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "A69 finish", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.701932, 54.986524, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "A69 (2)", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.697065, 54.985555, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "A69 (3)", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -1.699435, 54.986056, 0.000000 ] } }
+
+]
+}

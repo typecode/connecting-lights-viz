@@ -7,3 +7,6 @@
 [submodule "static/js/lib/typecode-js"]
 	path = static/js/lib/typecode-js
 	url = git@github.com:typecode/typecode-js.git
+[submodule "static/js/lib/d3-threeD"]
+	path = static/js/lib/d3-threeD
+	url = git://github.com/asutherland/d3-threeD.git

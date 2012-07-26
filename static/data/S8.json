@@ -1,0 +1,33 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "Name": "CL S8 PARKING POINT", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.519860, 54.986958, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "CL S8 PARKING POINT", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.509690, 54.989193, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S8", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.519143, 54.987824, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S8", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.522639, 54.987754, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S8", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.526125, 54.987813, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S8", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.529320, 54.987962, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S8", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.532727, 54.987953, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S8", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.516597, 54.988398, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S8", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.514872, 54.989286, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S8", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.512478, 54.990158, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S8", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.510120, 54.990890, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S8", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.507625, 54.991671, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S8", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.505990, 54.993036, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "S8", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.503247, 54.993415, 0.000000 ] } }
+
+]
+}

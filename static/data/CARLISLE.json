@@ -1,0 +1,39 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "Name": "carlisle", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.985644, 54.910418, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "carlisle", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.984929, 54.908776, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "carlisle", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.983635, 54.907237, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "carlisle", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.982643, 54.905539, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "carlisle", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.981492, 54.904038, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "carlisle", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.980143, 54.902592, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "carlisle", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.978052, 54.901472, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "carlisle", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.976254, 54.900856, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "carlisle", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.973756, 54.900196, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "carlisle", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.971286, 54.899680, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "carlisle exit", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.968725, 54.899190, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "carlisle exit", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.986777, 54.911497, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "tullie house", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.940666, 54.895808, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "carlisle castle", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.942062, 54.897072, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "carlisle HW", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.944718, 54.901227, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "carlisle", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.944061, 54.898882, 0.000000 ] } }
+,
+{ "type": "Feature", "properties": { "Name": "carlisle", "Description": "" }, "geometry": { "type": "Point", "coordinates": [ -2.948220, 54.900680, 0.000000 ] } }
+
+]
+}

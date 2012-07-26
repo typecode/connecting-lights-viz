@@ -53,8 +53,8 @@
  */
 
 body {
-	overflow: scroll; overflow-x: auto; min-width: 960px;
-	background-color: #2e2e2e;
+	overflow: scroll; overflow-x: auto;
+	background-color: #6f6f6f;
 	color: #cccccc;
 	text-align: left;
 	font-family: "ITCFranklinGothicW01-Bk 812656";
