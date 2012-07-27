@@ -83,7 +83,7 @@
 					//camera position stuff
 					view_angle: 45,//
 					aspect: (o.width / o.height),
-					near: 0.1,
+					near: 0.001,
 					far: 100000,
 
 					//scene stuff
@@ -106,6 +106,10 @@
 						lines: []
 					},
 
+					balloons: {
+						material: new THREE.MeshLambertMaterial({emissive: 0xf4f4f4}),
+					},
+
 					last_frame: 0
 				};
 
@@ -117,7 +121,7 @@
 				fn = {
 					init: function(){
 						internal.renderer = new THREE.CanvasRenderer();
-						internal.renderer.setClearColor({r:9, g:9, b:9}, 5);
+						//internal.renderer.setClearColor({r:1, g:1, b:1}, 5);
 						//internal.renderer = new THREE.WebGLRenderer({clearAlpha:1});
 						internal.renderer.setSize(o.width, o.height);
 						internal.$e.append(internal.renderer.domElement);
@@ -125,9 +129,9 @@
 						internal.scene = new THREE.Scene();
 
 						internal.camera = new THREE.PerspectiveCamera(internal.view_angle, internal.aspect, internal.near, internal.far);
-						internal.camera.position.z = 1000;
-						internal.camera.position.x = 0;
-						internal.camera.position.y = 0;
+						internal.camera.position.z = 0.03;
+						internal.camera.position.x = -3.1;
+						internal.camera.position.y = 54.927;
 						
 						internal.camera.lookAt(internal.scene.position);
 						internal.scene.add(internal.camera);
@@ -135,17 +139,22 @@
 						internal.light.position.x = 800;
 						internal.light.position.y = 800;
 						internal.light.position.z = 800;
-						internal.scene.add(internal.light);
+						//internal.scene.add(internal.light);
 
 						internal.plane.plane = new THREE.Mesh(internal.plane.geo, internal.plane.mat);
 						internal.plane.plane.rotation.x = (Math.PI/2);
-						internal.scene.add(internal.plane.plane);
+						//internal.scene.add(internal.plane.plane);
 
 						internal.controls = new THREE.FirstPersonControls(internal.camera);
-						internal.controls.movementSpeed = 0.001;
-                		internal.controls.lookSpeed = 0.1;
-                		internal.controls.noFly = true;
-                		internal.controls.lookVertical = true;
+						internal.controls.movementSpeed = 0.0001;
+						internal.controls.lookSpeed = 0.1;
+						internal.controls.noFly = false;
+						internal.controls.lookVertical = true;
+					},
+
+					add_origin: function(){
+						internal.axis = new THREE.AxisHelper();
+						internal.scene.add(internal.axis);
 					},
 
 					add_uk_boundary: function(){
@@ -168,87 +177,60 @@
 												0)
 											);
 										}
-										console.log(my_feature_geometry.vertices)
 										internal.uk_boundary.geometry.push(my_feature_geometry);
 									}
 								}
 							}
 
 							for(i = 0; i < internal.uk_boundary.geometry.length; i++){
-								internal.uk_boundary.meshes[i] = new THREE.Mesh(internal.uk_boundary.geometry[i], internal.uk_boundary.material);
-								console.log(internal.uk_boundary.meshes[i])
+								internal.uk_boundary.meshes[i] = new THREE.Line(internal.uk_boundary.geometry[i], internal.uk_boundary.material);
+								console.log(internal.uk_boundary.meshes[i]);
 								internal.scene.add(internal.uk_boundary.meshes[i]);
 							}
 
 						});
 					},
 
-					add_wall_v2: function(){
+					add_wall: function(){
 						jQuery.getJSON('static/data/hadrians-wall.json', function(d){
 							var i, j, my_feature, my_feature_intermediate_path, my_feature_path, my_feature_shape,
 							my_feature_3d, my_f, my_ls, my_x, my_y, my_z, lat, lon, alt;
 
-							internal.wall.material.linewidth = 2;
+							internal.wall.material.linewidth = 1;
 
 							for(i = 0; i < d.features.length; i++){
 								my_feature = d.features[i];
-
 								my_feature_geometry = new THREE.Geometry();
 								for(j = 0; j < my_feature.geometry.coordinates.length; j++){
-									//console.log(my_feature.geometry.coordinates[j]);
-									//my_feature_geometry.vertices.push(new THREE.Vector3(my_feature.geometry.coordinates[j][0] + 2, my_feature.geometry.coordinates[j][1] - 54, 0));
-
-									lat = my_feature.geometry.coordinates[j][0];
-									lon = my_feature.geometry.coordinates[j][1];
-									alt = 0;
-
-									my_f  = 0
-    								my_ls = Math.atan((1 - my_f) * 2 * Math.tan(lat))
-
-    								my_x = (180/Math.PI) * Math.cos(my_ls) * Math.cos(lon) + alt * Math.cos(lat) * Math.cos(lon)
-    								my_y = (180/Math.PI) * Math.cos(my_ls) * Math.sin(lon) + alt * Math.cos(lat) * Math.sin(lon)
-    								my_z = (180/Math.PI) * Math.sin(my_ls) + alt * Math.sin(lat)
-
-
-
-									//my_x = 1 * Math.cos(my_feature.geometry.coordinates[j][0]) * Math.cos(my_feature.geometry.coordinates[j][1]);
-									//my_y = 1 * Math.cos(my_feature.geometry.coordinates[j][0]) * Math.sin(my_feature.geometry.coordinates[j][1]);
-									//my_z = 1 * Math.sin(my_feature.geometry.coordinates[j][0]);
-									console.log(my_x);
-									console.log(my_y);									
-									console.log(my_z);
-									my_feature_geometry.vertices.push(new THREE.Vector3(my_x, my_y, my_z));
-									
+									my_feature_geometry.vertices.push(new THREE.Vector3(
+										my_feature.geometry.coordinates[j][0],
+										my_feature.geometry.coordinates[j][1],
+										0)
+									);
 								}
 								internal.wall.geometry.push(my_feature_geometry);
 							}
-
-
 
 							for(i = 0; i < internal.wall.geometry.length; i++){
 								internal.wall.lines[i] = new THREE.Line(internal.wall.geometry[i], internal.wall.material);
 								internal.scene.add(internal.wall.lines[i]);
 							}
 
-							console.log(internal.wall.lines[0].matrixWorld.getPosition());
-
-							//internal.camera.lookAt(internal.wall.lines[0].geometry.vertices[0]);
-
 						});
 					},
 
 					add_balloons: function(){
 						jQuery.getJSON('static/data/S12.json', function(d){
-							var i, my_feature, my_feature_intermediate_path, my_feature_shape;
+							var i, my_feature, my_geometry, my_sphere;
+							my_geometry = new THREE.SphereGeometry(0.0005, 6, 6);
+
 							for(i = 0; i < d.features.length; i++){
-								my_feature = d.features[i];
-								my_spehere = new THREE.SphereGeometry(0.1, my_feature.geometry.coordinates[0] + 2, my_feature.geometry.coordinates[0] - 54, 0)
-								//console.log(my_feature);
-								//my_feature_intermediate_path = geo.path(my_feature);
-								//console.log(my_feature_intermediate_path);
-								//my_feature_shape = transformSVGPathExposed(my_feature_intermediate_path);
-								//console.log(my_feature_shape);
+								my_sphere = new THREE.Mesh(my_geometry, internal.balloons.material);
+								my_sphere.position.x = d.features[i].geometry.coordinates[0];
+								my_sphere.position.y = d.features[i].geometry.coordinates[1];
+								internal.scene.add(my_sphere);
 							}
+
 						});
 					},
 
@@ -290,8 +272,8 @@
 				o.app.events.bind('app.featuresInitialized', {}, function(){
 					fn.init();
 					fn.add_uk_boundary();
-					//fn.add_wall_v2();
-					//fn.add_balloons();
+					fn.add_wall();
+					fn.add_balloons();
 					fn.animate();
 					internal.renderer.setSize(elements.window.width(), elements.window.height());
 					internal.camera.aspect = elements.window.width() / elements.window.height();
