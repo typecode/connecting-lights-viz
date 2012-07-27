@@ -139,9 +139,9 @@
 						//internal.camera.position.z = 0.03;
 						//internal.camera.position.x = -3.1;
 						//internal.camera.position.y = 54.927;
-						internal.camera.position.x = 200;
-						internal.camera.position.y = 200;
-						internal.camera.position.z = 200;
+						internal.camera.position.x = 0;
+						internal.camera.position.y = 100;
+						internal.camera.position.z = 10;
 					
 						internal.scene.add(internal.camera);
 
@@ -302,8 +302,8 @@
 
 						var vector2 = new THREE.Vector3( 
 							e.clientX,
-							e.clientY,
-							1
+							-e.clientY,
+							0.5
 						);
 
 						console.log(vector2)
@@ -320,9 +320,9 @@
 
 
 
-						internal.cursor.position.x = vector2.x;
-						internal.cursor.position.y = vector2.y;
-						internal.cursor.position.z = vector2.z;
+						internal.cursor.position.x = vector2.x-5;
+						internal.cursor.position.y = vector2.y-5;
+						internal.cursor.position.z = vector2.z-5;
 						
 						console.log(internal.cursor.position);
 						//var ray = new THREE.Ray( internal.camera.position, mouse3d.subSelf( internal.camera.position ).normalize() );
