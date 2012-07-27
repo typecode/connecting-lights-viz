@@ -38,6 +38,10 @@
 		<!-- three.js -->
 		<script src='static/js/lib/three.js/build/Three.js'></script>
 
+		<!-- threex 
+		<script src='static/js/lib/threex/threex.domevent.js'></script>
+		<script src='static/js/lib/threex/threex.domevent.object3d.js'></script> -->
+
 		<!-- d3-threeD -->
 		<script src='static/js/lib/d3-threeD/lib/d3-threeD.js'></script>
 
@@ -81,18 +85,20 @@
 					controls: null,
 
 					//camera position stuff
-					view_angle: 45,//
+					view_angle: 70,//
 					aspect: (o.width / o.height),
 					near: 0.001,
 					far: 100000,
 
-					//scene stuff
-					light: new THREE.PointLight(0xffffff),
-					plane: {
-						geo: new THREE.PlaneGeometry(100, 100, 10, 10),
-						mat: new THREE.MeshLambertMaterial({color: 0xf4f4f4}),
-						plane: null
+					//projector
+					mouse_pos: {
+						x: 0,
+						y: 0,
+						z: 0.5
 					},
+					projector: new THREE.Projector(),
+
+					//scene stuff
 
 					uk_boundary: {
 						material: new THREE.LineBasicMaterial({color: 0x00ff00}),
@@ -108,6 +114,7 @@
 
 					balloons: {
 						material: new THREE.MeshLambertMaterial({emissive: 0xf4f4f4}),
+						objects: []
 					},
 
 					last_frame: 0
@@ -121,7 +128,7 @@
 				fn = {
 					init: function(){
 						internal.renderer = new THREE.CanvasRenderer();
-						//internal.renderer.setClearColor({r:1, g:1, b:1}, 5);
+						internal.renderer.setClearColor({r:1, g:1, b:1}, 5);
 						//internal.renderer = new THREE.WebGLRenderer({clearAlpha:1});
 						internal.renderer.setSize(o.width, o.height);
 						internal.$e.append(internal.renderer.domElement);
@@ -129,27 +136,20 @@
 						internal.scene = new THREE.Scene();
 
 						internal.camera = new THREE.PerspectiveCamera(internal.view_angle, internal.aspect, internal.near, internal.far);
-						internal.camera.position.z = 0.03;
-						internal.camera.position.x = -3.1;
-						internal.camera.position.y = 54.927;
-						
-						internal.camera.lookAt(internal.scene.position);
+						//internal.camera.position.z = 0.03;
+						//internal.camera.position.x = -3.1;
+						//internal.camera.position.y = 54.927;
+						internal.camera.position.x = 200;
+						internal.camera.position.y = 200;
+						internal.camera.position.z = 200;
+					
 						internal.scene.add(internal.camera);
 
-						internal.light.position.x = 800;
-						internal.light.position.y = 800;
-						internal.light.position.z = 800;
-						//internal.scene.add(internal.light);
-
-						internal.plane.plane = new THREE.Mesh(internal.plane.geo, internal.plane.mat);
-						internal.plane.plane.rotation.x = (Math.PI/2);
-						//internal.scene.add(internal.plane.plane);
-
-						internal.controls = new THREE.FirstPersonControls(internal.camera);
-						internal.controls.movementSpeed = 0.0001;
-						internal.controls.lookSpeed = 0.1;
-						internal.controls.noFly = false;
-						internal.controls.lookVertical = true;
+						//internal.controls = new THREE.FirstPersonControls(internal.camera);
+						//internal.controls.movementSpeed = 0.0001;
+						//internal.controls.lookSpeed = 0.1;
+						//internal.controls.noFly = false;
+						//internal.controls.lookVertical = true;
 					},
 
 					add_origin: function(){
@@ -184,7 +184,6 @@
 
 							for(i = 0; i < internal.uk_boundary.geometry.length; i++){
 								internal.uk_boundary.meshes[i] = new THREE.Line(internal.uk_boundary.geometry[i], internal.uk_boundary.material);
-								console.log(internal.uk_boundary.meshes[i]);
 								internal.scene.add(internal.uk_boundary.meshes[i]);
 							}
 
@@ -229,9 +228,19 @@
 								my_sphere.position.x = d.features[i].geometry.coordinates[0];
 								my_sphere.position.y = d.features[i].geometry.coordinates[1];
 								internal.scene.add(my_sphere);
+								console.log(my_sphere);
+								internal.balloons.objects.push(my_sphere);
 							}
 
 						});
+					},
+
+					add_cursor: function(){
+						my_geometry = new THREE.SphereGeometry(1, 6, 6);
+
+						internal.cursor = new THREE.Mesh(my_geometry, new THREE.MeshLambertMaterial({color:0xff0000,emissive: 0xff0000}));
+						internal.scene.add(internal.cursor);
+
 					},
 
 					animate: function(frame_time){
@@ -244,7 +253,16 @@
 
 					draw: function(delta){
 						elements.frame_id.text(internal.animation_frame_id);
-						internal.controls.update(delta);
+						
+
+						// find intersections
+						var INTERSECTED;
+						
+						//console.log(vector);
+
+						internal.camera.lookAt(internal.scene.position);
+
+						//internal.controls.update(delta);
 						internal.renderer.render(internal.scene, internal.camera);
 					}
 				};
@@ -263,17 +281,67 @@
 					resize: function(){
 						internal.renderer.setSize(elements.window.width(), elements.window.height());
 						internal.camera.aspect = elements.window.width() / elements.window.height();
+					},
+					document_mousemove: function(e,d){
+
+				//		var vector = new THREE.Vector3( 
+				//			( e.clientX / internal.renderer.domElement.width ) * 2 - 1,
+				//			- ( e.clientY / internal.renderer.domElement.height ) * 2 + 1,
+				//			0.5
+				//		);
+//
+				//		//var mouse3d = internal.projector.unprojectVector(vector, internal.camera);
+//
+				//		var _projScreenMatrix = new THREE.Matrix4();
+//
+				//		internal.camera.projectionMatrixInverse.getInverse( internal.camera.projectionMatrix );
+				//		_projScreenMatrix.multiply( internal.camera.matrixWorld, internal.camera.projectionMatrixInverse );
+				//		_projScreenMatrix.multiplyVector3( vector );
+//
+				//		console.log(vector);
+
+						var vector2 = new THREE.Vector3( 
+							e.clientX,
+							e.clientY,
+							1
+						);
+
+						console.log(vector2)
+
+
+						var _projScreenMatrix = new THREE.Matrix4();
+
+						internal.camera.projectionMatrixInverse.getInverse( internal.camera.projectionMatrix );
+						_projScreenMatrix.multiply( internal.camera.matrixWorld, internal.camera.projectionMatrixInverse );
+						_projScreenMatrix.multiplyVector3( vector2 );
+
+						console.log(vector2);
+
+
+
+
+						internal.cursor.position.x = vector2.x;
+						internal.cursor.position.y = vector2.y;
+						internal.cursor.position.z = vector2.z;
+						
+						console.log(internal.cursor.position);
+						//var ray = new THREE.Ray( internal.camera.position, mouse3d.subSelf( internal.camera.position ).normalize() );
+						//var intersects = ray.intersectObjects( internal.balloons.objects );
+						//console.log(intersects);
 					}
 				};
 
 				jQuery(window).bind('keypress', {}, handlers.keypress);
 				jQuery(window).bind('resize', {}, handlers.resize);
+				jQuery(document).bind('mousemove', {}, handlers.document_mousemove);
 
 				o.app.events.bind('app.featuresInitialized', {}, function(){
 					fn.init();
+					fn.add_origin();
 					fn.add_uk_boundary();
 					fn.add_wall();
 					fn.add_balloons();
+					fn.add_cursor();
 					fn.animate();
 					internal.renderer.setSize(elements.window.width(), elements.window.height());
 					internal.camera.aspect = elements.window.width() / elements.window.height();
