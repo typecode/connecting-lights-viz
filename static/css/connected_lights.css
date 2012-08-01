@@ -1,1 +1,1 @@
-#animation-frame-id { position: fixed; bottom:10px; left: 10px;}
+#n-particles { position: fixed; bottom:10px; left: 10px; color:white; z-index:99999;}

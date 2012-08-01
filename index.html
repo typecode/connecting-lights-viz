@@ -24,9 +24,9 @@
 	</head>
 
 	<body>
-		<div id='application' class="app-wrap">
-			<p id='animation-frame-id'></p>
-		</div>
+		<div id='application' class="app-wrap"></div>
+
+		<p id='n-particles'></p>
 
 		<!-- jQuery & Other Libraries -->
 		<script src='static/js/lib/jquery-1.7.2.min.js'></script>
@@ -47,6 +47,9 @@
 		<!-- leaflet -->
 		<script src='static/js/lib/leaflet/dist/leaflet.js'></script>
 		<link rel="stylesheet" href="static/js/lib/leaflet/dist/leaflet.css">
+
+		<!-- leaflet: TileLayer.TileJSON.js -->
+		<script src='static/js/lib/TileLayer.TileJSON.js'></script>
 
 		<!-- stats.js -->
 		<script src='static/js/lib/stats.js/build/Stats.js'></script>
@@ -77,19 +80,21 @@
 					$e:null,
 					selector:'',
 					width: 600,
-					height: 600
+					height: 600,
+					tileSize: 256,
+					buffer: 5
 				}, options);
 				
 				internal = {
 					name:'Module.Viz_Two',
 					$e:(o.$e ? o.$e : $(o.selector)),
-
-					
+					particles: []
 				};
 
 				elements = {
 					window: $(window),
-					map: null
+					map: null,
+					n_particles: $('#n-particles')
 				};
 
 				fn = {
@@ -107,141 +112,212 @@
 							'width': o.width + 'px'
 						});
 
-						internal.map = L.map('application').setView([51.505, -0.09], 13);
+						internal.map = L.map('application');
 
-						L.tileLayer('http://{s}.tile.cloudmade.com/fbcae4e80bd94f61ad844c9a52158e08/997/256/{z}/{x}/{y}.png', {
-							 attribution: 'some attribution',
-							maxZoom: 18
+						fn.generate_particles(10);
+
+						L.tileLayer('static/map_tms_/1.0.0/ConnectingLights/{z}/{x}/{y}.png', {
+							errorTileUrl: 'static/map_tms_/error_tile.png',
+							minZoom:9,
+							maxZoom: 15,
+							tms:true
 						}).addTo(internal.map);
 
-						internal.canvasTiles = L.tileLayer.canvas({
-							options: {
-								debug: false
-							},
+						internal.map.setView([54.9839, -2.3291], 10);
 
-							tileSize: 256,
-
-							initialize: function (options) {
-								L.Util.setOptions(this, options);
-
-								this.drawTile = function (canvas, tilePoint, zoom) {
-									var ctx = {
-										canvas: canvas,
-										tile: tilePoint,
-										zoom: zoom
-									};
-
-									if (this.options.debug) {
-										this._drawDebugInfo(ctx);
-									}
-									this._draw(ctx);
-								};
-							},
-
-							_draw: function(ctx){
-								console.log('_draw');
-							}
+						internal.canvasTiles = new L.TileLayer.Canvas({
+							
 						});
 
+						internal.canvasTiles.tileSize = 256;
 
-
-/*
-						var nwPoint = ctx.tile.multiplyBy(this.tileSize);
-		var sePoint = nwPoint.add(new L.Point(this.tileSize, this.tileSize));
-
-		// optionally, enlarge request area.
-		// with this I can draw points with coords outside this tile area,
-		// but with part of the graphics actually inside this tile.
-		// NOTE: that you should use this option only if you're actually drawing points!
-		var buf = this.options.buffer;
-		if (buf > 0) {
-			var diff = new L.Point(buf, buf);
-			nwPoint = nwPoint.subtract(diff);
-			sePoint = sePoint.add(diff);
-		}
-
-		var nwCoord = this._map.unproject(nwPoint, ctx.zoom, true);
-		var seCoord = this._map.unproject(sePoint, ctx.zoom, true);
-		var bounds = [nwCoord.lng, seCoord.lat, seCoord.lng, nwCoord.lat];
-
-						internal.canvasTiles.drawTile = function(canvas, tilePoint, zoom) {
-							console.log(tilePoint);
-							console.log(L.Projection.LonLat.unproject(tilePoint));
-
-
-							var context = canvas.getContext('2d');
-							// Circle
-							context.beginPath();
-							context.arc(10, 10, 5, 0, 2 * Math.PI, false);
-
-							// Fill (Gradient)
-							var grd = context.createRadialGradient(10, 10, 5, 10, 10, 5);
-							grd.addColorStop(0, "#8ED6FF");
-							grd.addColorStop(1, "#004CB3");
-							context.fillStyle = grd;
-
-							// Shadow
-							context.shadowColor = "#666666";
-							context.shadowBlur = 5;
-							context.shadowOffsetX = 7;
-							context.shadowOffsetY = 7;
-							context.fill()
-
-							context.lineWidth = 2;
-							context.strokeStyle = "black";
-							context.stroke();
-
-							// Text
-							context.lineWidth = 1;
-							context.fillStyle = "#000000";
-							context.lineStyle = "#000000";
-							context.font = "12px sans-serif";
-							context.textAlign = "center";
-							context.textBaseline = "middle";
-							//context.fillText(i + 1, x, y);
-							//console.log('drawTile---' + tilePoint.x + ':' + tilePoint.y);
-							// draw something on the tile canvas
-						};
-
-
+						internal.canvasTiles.drawTile = fn.drawTile;
 
 						internal.canvasTiles.addTo(internal.map);
-						internal.canvasTiles.redraw();
-*/						
 
-						jQuery.getJSON('static/data/hadrians-wall.json', function(d){
-							console.log(d);
-							L.geoJson(d, {
-								style: function (feature) {
-									return {
-										"color": "#ff7800",
-										"weight": 5,
-										"opacity": 0.65
-									};
-								},
-								onEachFeature: function (feature, layer) {
-									layer.bindPopup(feature.properties.description);
-								}
-							}).addTo(internal.map);
-						});
-
-						jQuery.getJSON('static/data/balloons/output.json', function(d){
-							console.log(d);
-							L.geoJson(d, {
-								style: function (feature) {
-									return {
-										"color": "#ff7800",
-										"weight": 5,
-										"opacity": 0.65
-									};
-								},
-								onEachFeature: function (feature, layer) {
-									layer.bindPopup(feature.properties.description);
-								}
-							}).addTo(internal.map);
-						});
-						
 					},
+
+					generate_particles: function(n_particles){
+						var parameters, i;
+
+						parameters = {
+							bounds: new L.LatLngBounds(new L.LatLng(54.7516,-3.5898), new L.LatLng(55.1804,-1.0849))
+						};
+
+						for(i = 0; i < n_particles; i++){
+							internal.particles.push({
+								lat_lng: null,
+								position_on_line: Math.random(0),
+								velocity: (Math.random() * 0.01) - 0.005
+							});
+						}
+					},
+
+					update_particles: function(){
+						var i, my_particle;
+						for(i = 0; i < internal.particles.length; i++){
+							my_particle = internal.particles[i];
+							my_particle.position_on_line = my_particle.position_on_line + my_particle.velocity;
+							if(my_particle.position_on_line < 0 || my_particle.position_on_line > 1){
+								my_particle.velocity = my_particle.velocity * -1;
+								if(my_particle.position_on_line < 0){
+									my_particle.position_on_line = 0;
+								}
+								if(my_particle.position_on_line > 1){
+									my_particle.position_on_line = 1;
+								}
+							}
+							my_particle.lat_lng = fn.map_position_on_line_2_lat_lng(my_particle.position_on_line);
+						}
+					},
+
+					drawTile: function(canvas, tilePoint, zoom){
+
+						var ctx, bounds, particles_to_draw, i;
+
+						ctx = {
+							map: this._map,
+							canvas: canvas,
+							context: canvas.getContext('2d'),
+							tile: tilePoint,
+							zoom: zoom
+						};
+
+						bounds = fn.get_canvas_bounds(ctx, o.buffer);
+						particles_to_draw = fn.get_particles_for_bounds(bounds);
+
+						ctx.context.clearRect (0,0, ctx.canvas.width, ctx.canvas.height);
+						for(i = 0; i < particles_to_draw.length; i++){
+							fn.draw_particle(ctx, particles_to_draw[i])
+						}
+
+					},
+
+					draw_particle: function(ctx, particle){
+
+						var style, geom, p, c, g;
+
+						style = {
+							color: 'rgba(252,146,114,0.6)',
+							radius: 5
+						};
+
+						geom = particle.lat_lng;
+
+						p = this.get_tile_point(ctx, geom);
+						c = ctx.canvas;
+						g = ctx.context;
+						g.beginPath();
+						g.fillStyle = style.color;
+						g.arc(p.x, p.y, style.radius, 0, Math.PI * 2);
+						g.closePath();
+						g.fill();
+						g.restore();
+					},
+
+					get_canvas_bounds: function(ctx, buf){
+						//potentially a slow function - look at caching it on the canvas object?
+
+
+						var nwPoint, sePoint, diff, nwCoord, seCoord, swLatLng, neLatLng, bounds;
+					
+						nwPoint = ctx.tile.multiplyBy(o.tileSize);
+						sePoint = nwPoint.add(new L.Point(o.tileSize, o.tileSize));
+
+						// optionally, enlarge request area.
+						// with this I can draw points with coords outside this tile area,
+						// but with part of the graphics actually inside this tile.
+						// NOTE: that you should use this option only if you're actually drawing points!
+						if (buf > 0) {
+							diff = new L.Point(buf, buf);
+							nwPoint = nwPoint.subtract(diff);
+							sePoint = sePoint.add(diff);
+						}
+
+						nwCoord = ctx.map.unproject(nwPoint, ctx.zoom, true);
+						seCoord = ctx.map.unproject(sePoint, ctx.zoom, true);
+
+						swLatLng = new L.LatLng(seCoord.lat, nwCoord.lng);
+						neLatLng = new L.LatLng(nwCoord.lat, seCoord.lng);
+						bounds = new L.LatLngBounds(swLatLng, neLatLng);
+						
+						return bounds;
+					},
+
+					get_particles_for_bounds: function(bounds){
+						var i, output;
+						output = [];
+						for(i = 0; i < internal.particles.length; i++){
+							
+							if(internal.particles[i].lat_lng && bounds.contains(internal.particles[i].lat_lng)){
+								output.push(internal.particles[i]);
+							}
+						}
+						return output;
+					},
+
+					get_tile_point: function(ctx, coords){
+						// start coords to tile 'space'
+						var s = ctx.tile.multiplyBy(o.tileSize);
+
+						// actual coords to tile 'space'
+						var p = ctx.map.project(coords);
+
+						// point to draw
+						var x = Math.round(p.x - s.x);
+						var y = Math.round(p.y - s.y);
+						return {
+							x: x,
+							y: y
+						};
+					},
+
+					map_position_on_line_2_lat_lng: function(position_on_line){
+						var lat_lng;
+						var interpolator = d3.interpolateNumber(-1.793770, -3.212830);
+						lat_lng = new L.LatLng(54.973934, interpolator(position_on_line));
+						return lat_lng;
+					},
+
+					add_json_layers: function(){
+						if(o.draw_hadrians_wall){
+							jQuery.getJSON('static/data/hadrians-wall.json', function(d){
+								L.geoJson(d, {
+									style: function (feature) {
+										return {
+											"color": "#ff7800",
+											"weight": 5,
+											"opacity": 0.65
+										};
+									},
+									onEachFeature: function (feature, layer) {
+										layer.bindPopup(feature.properties.description);
+									}
+								}).addTo(internal.map);
+							});
+						}
+							
+
+						if(o.draw_balloons){
+							jQuery.getJSON('static/data/balloons/output.json', function(d){
+								L.geoJson(d, {
+									style: function (feature) {
+										return {
+											"color": "#ff7800",
+											"weight": 5,
+											"opacity": 0.65
+										};
+									},
+									onEachFeature: function (feature, layer) {
+										layer.bindPopup(feature.properties.description);
+									}
+								}).addTo(internal.map);
+							});
+						}
+
+					},
+
+
 
 					animate: function(frame_time){
 						var delta;
@@ -253,13 +329,16 @@
 					},
 
 					draw: function(){
+						fn.update_particles();
 						internal.canvasTiles.redraw();
 						internal.stats.end();
+						elements.n_particles.text(internal.particles.length);
 					}
 				};
 
 				handlers = {
 					keypress: function(e, d){
+						console.log(e.which);
 						if(e.which == 112){ // 'p'
 							if(internal.animation_frame_id){
 								cancelAnimationFrame(internal.animation_frame_id);
@@ -267,10 +346,15 @@
 							} else {
 								internal.animation_frame_id = requestAnimationFrame(fn.animate);
 							}
+						} else if(e.which == 103){ // 'g'
+							fn.generate_particles(10);
 						}
 					},
 					resize: function(){
-						
+						internal.$e.css({
+							'height': $(window).height() + 'px',
+							'width': $(window).width() + 'px'
+						});
 					}
 				};
 
