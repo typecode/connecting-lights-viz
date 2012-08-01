@@ -13,3 +13,6 @@
 [submodule "static/js/lib/threex"]
 	path = static/js/lib/threex
 	url = git://github.com/jeromeetienne/threex.git
+[submodule "static/js/lib/stats.js"]
+	path = static/js/lib/stats.js
+	url = git://github.com/mrdoob/stats.js.git

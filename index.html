@@ -25,7 +25,6 @@
 
 	<body>
 		<div id='application' class="app-wrap">
-		
 			<p id='animation-frame-id'></p>
 		</div>
 
@@ -45,6 +44,13 @@
 		<!-- d3-threeD -->
 		<script src='static/js/lib/d3-threeD/lib/d3-threeD.js'></script>
 
+		<!-- leaflet -->
+		<script src='static/js/lib/leaflet/dist/leaflet.js'></script>
+		<link rel="stylesheet" href="static/js/lib/leaflet/dist/leaflet.css">
+
+		<!-- stats.js -->
+		<script src='static/js/lib/stats.js/build/Stats.js'></script>
+
 		<!-- geo-util from http://www.smartjava.org/examples/threed3s/ -->
 		<script src='static/js/lib/geo-util.js'></script>
 
@@ -59,11 +65,10 @@
 
 		</script>
 		
-		
 		<!-- Application -->
 		<script type='text/javascript'>
 
-			var Viz_One = function(options) {
+			var Viz_Two = function(options) {
 					
 				var o, internal, elements, fn, handlers;
 				
@@ -76,194 +81,180 @@
 				}, options);
 				
 				internal = {
-					name:'Module.Viz_One',
+					name:'Module.Viz_Two',
 					$e:(o.$e ? o.$e : $(o.selector)),
 
-					renderer: null,
-					camera: null,
-					scene: null,
-					controls: null,
-
-					//camera position stuff
-					view_angle: 70,//
-					aspect: (o.width / o.height),
-					near: 0.001,
-					far: 100000,
-
-					//projector
-					mouse_pos: {
-						x: 0,
-						y: 0,
-						z: 0.5
-					},
-					projector: new THREE.Projector(),
-
-					//scene stuff
-
-					uk_boundary: {
-						material: new THREE.LineBasicMaterial({color: 0x00ff00}),
-						geometry: [],
-						meshes: []
-					},
-
-					wall: {
-						material: new THREE.LineBasicMaterial({color: 0xff0000}),
-						geometry: [],
-						lines: []
-					},
-
-					balloons: {
-						material: new THREE.MeshLambertMaterial({emissive: 0xf4f4f4}),
-						objects: []
-					},
-
-					last_frame: 0
+					
 				};
 
 				elements = {
 					window: $(window),
-					frame_id: $('#frame-id')
+					map: null
 				};
 
 				fn = {
 					init: function(){
-						internal.renderer = new THREE.CanvasRenderer();
-						internal.renderer.setClearColor({r:1, g:1, b:1}, 5);
-						//internal.renderer = new THREE.WebGLRenderer({clearAlpha:1});
-						internal.renderer.setSize(o.width, o.height);
-						internal.$e.append(internal.renderer.domElement);
+						internal.stats = new Stats();
+						internal.stats.setMode(0); // 0: fps, 1: ms
+						internal.stats.domElement.style.position = 'absolute';
+						internal.stats.domElement.style.right = '0px';
+						internal.stats.domElement.style.top = '0px';
+						document.body.appendChild( internal.stats.domElement );
 
-						internal.scene = new THREE.Scene();
 
-						internal.camera = new THREE.PerspectiveCamera(internal.view_angle, internal.aspect, internal.near, internal.far);
-						//internal.camera.position.z = 0.03;
-						//internal.camera.position.x = -3.1;
-						//internal.camera.position.y = 54.927;
-						internal.camera.position.x = 0;
-						internal.camera.position.y = 100;
-						internal.camera.position.z = 10;
-					
-						internal.scene.add(internal.camera);
+						internal.$e.css({
+							'height': o.height + 'px',
+							'width': o.width + 'px'
+						});
 
-						//internal.controls = new THREE.FirstPersonControls(internal.camera);
-						//internal.controls.movementSpeed = 0.0001;
-						//internal.controls.lookSpeed = 0.1;
-						//internal.controls.noFly = false;
-						//internal.controls.lookVertical = true;
-					},
+						internal.map = L.map('application').setView([51.505, -0.09], 13);
 
-					add_origin: function(){
-						internal.axis = new THREE.AxisHelper();
-						internal.scene.add(internal.axis);
-					},
+						L.tileLayer('http://{s}.tile.cloudmade.com/fbcae4e80bd94f61ad844c9a52158e08/997/256/{z}/{x}/{y}.png', {
+							 attribution: 'some attribution',
+							maxZoom: 18
+						}).addTo(internal.map);
 
-					add_uk_boundary: function(){
-						jQuery.getJSON('static/data/uk-boundary.json', function(d){
-							var i, j, k, ii, my_feature, my_feature_intermediate_path, my_feature_path, my_feature_shape,
-							my_feature_3d, my_f, my_ls, my_x, my_y, my_z, lat, lon, alt;
+						internal.canvasTiles = L.tileLayer.canvas({
+							options: {
+								debug: false
+							},
 
-							internal.wall.material.linewidth = 2;
+							tileSize: 256,
 
-							for(i = 0; i < d.features.length; i++){
-								my_feature = d.features[i];
-								
-								for(j = 0; j < my_feature.geometry.coordinates.length; j++){
-									for(k = 0; k < my_feature.geometry.coordinates[j].length; k++){
-										my_feature_geometry = new THREE.Geometry();
-										for(ii = 0; ii < my_feature.geometry.coordinates[j][k].length; ii++){
-											my_feature_geometry.vertices.push(new THREE.Vector3(
-												my_feature.geometry.coordinates[j][k][ii][0],
-												my_feature.geometry.coordinates[j][k][ii][1],
-												0)
-											);
-										}
-										internal.uk_boundary.geometry.push(my_feature_geometry);
+							initialize: function (options) {
+								L.Util.setOptions(this, options);
+
+								this.drawTile = function (canvas, tilePoint, zoom) {
+									var ctx = {
+										canvas: canvas,
+										tile: tilePoint,
+										zoom: zoom
+									};
+
+									if (this.options.debug) {
+										this._drawDebugInfo(ctx);
 									}
-								}
-							}
+									this._draw(ctx);
+								};
+							},
 
-							for(i = 0; i < internal.uk_boundary.geometry.length; i++){
-								internal.uk_boundary.meshes[i] = new THREE.Line(internal.uk_boundary.geometry[i], internal.uk_boundary.material);
-								internal.scene.add(internal.uk_boundary.meshes[i]);
+							_draw: function(ctx){
+								console.log('_draw');
 							}
-
 						});
-					},
 
-					add_wall: function(){
+
+
+/*
+						var nwPoint = ctx.tile.multiplyBy(this.tileSize);
+		var sePoint = nwPoint.add(new L.Point(this.tileSize, this.tileSize));
+
+		// optionally, enlarge request area.
+		// with this I can draw points with coords outside this tile area,
+		// but with part of the graphics actually inside this tile.
+		// NOTE: that you should use this option only if you're actually drawing points!
+		var buf = this.options.buffer;
+		if (buf > 0) {
+			var diff = new L.Point(buf, buf);
+			nwPoint = nwPoint.subtract(diff);
+			sePoint = sePoint.add(diff);
+		}
+
+		var nwCoord = this._map.unproject(nwPoint, ctx.zoom, true);
+		var seCoord = this._map.unproject(sePoint, ctx.zoom, true);
+		var bounds = [nwCoord.lng, seCoord.lat, seCoord.lng, nwCoord.lat];
+
+						internal.canvasTiles.drawTile = function(canvas, tilePoint, zoom) {
+							console.log(tilePoint);
+							console.log(L.Projection.LonLat.unproject(tilePoint));
+
+
+							var context = canvas.getContext('2d');
+							// Circle
+							context.beginPath();
+							context.arc(10, 10, 5, 0, 2 * Math.PI, false);
+
+							// Fill (Gradient)
+							var grd = context.createRadialGradient(10, 10, 5, 10, 10, 5);
+							grd.addColorStop(0, "#8ED6FF");
+							grd.addColorStop(1, "#004CB3");
+							context.fillStyle = grd;
+
+							// Shadow
+							context.shadowColor = "#666666";
+							context.shadowBlur = 5;
+							context.shadowOffsetX = 7;
+							context.shadowOffsetY = 7;
+							context.fill()
+
+							context.lineWidth = 2;
+							context.strokeStyle = "black";
+							context.stroke();
+
+							// Text
+							context.lineWidth = 1;
+							context.fillStyle = "#000000";
+							context.lineStyle = "#000000";
+							context.font = "12px sans-serif";
+							context.textAlign = "center";
+							context.textBaseline = "middle";
+							//context.fillText(i + 1, x, y);
+							//console.log('drawTile---' + tilePoint.x + ':' + tilePoint.y);
+							// draw something on the tile canvas
+						};
+
+
+
+						internal.canvasTiles.addTo(internal.map);
+						internal.canvasTiles.redraw();
+*/						
+
 						jQuery.getJSON('static/data/hadrians-wall.json', function(d){
-							var i, j, my_feature, my_feature_intermediate_path, my_feature_path, my_feature_shape,
-							my_feature_3d, my_f, my_ls, my_x, my_y, my_z, lat, lon, alt;
-
-							internal.wall.material.linewidth = 1;
-
-							for(i = 0; i < d.features.length; i++){
-								my_feature = d.features[i];
-								my_feature_geometry = new THREE.Geometry();
-								for(j = 0; j < my_feature.geometry.coordinates.length; j++){
-									my_feature_geometry.vertices.push(new THREE.Vector3(
-										my_feature.geometry.coordinates[j][0],
-										my_feature.geometry.coordinates[j][1],
-										0)
-									);
+							console.log(d);
+							L.geoJson(d, {
+								style: function (feature) {
+									return {
+										"color": "#ff7800",
+										"weight": 5,
+										"opacity": 0.65
+									};
+								},
+								onEachFeature: function (feature, layer) {
+									layer.bindPopup(feature.properties.description);
 								}
-								internal.wall.geometry.push(my_feature_geometry);
-							}
-
-							for(i = 0; i < internal.wall.geometry.length; i++){
-								internal.wall.lines[i] = new THREE.Line(internal.wall.geometry[i], internal.wall.material);
-								internal.scene.add(internal.wall.lines[i]);
-							}
-
+							}).addTo(internal.map);
 						});
-					},
 
-					add_balloons: function(){
-						jQuery.getJSON('static/data/S12.json', function(d){
-							var i, my_feature, my_geometry, my_sphere;
-							my_geometry = new THREE.SphereGeometry(0.0005, 6, 6);
-
-							for(i = 0; i < d.features.length; i++){
-								my_sphere = new THREE.Mesh(my_geometry, internal.balloons.material);
-								my_sphere.position.x = d.features[i].geometry.coordinates[0];
-								my_sphere.position.y = d.features[i].geometry.coordinates[1];
-								internal.scene.add(my_sphere);
-								console.log(my_sphere);
-								internal.balloons.objects.push(my_sphere);
-							}
-
+						jQuery.getJSON('static/data/balloons/output.json', function(d){
+							console.log(d);
+							L.geoJson(d, {
+								style: function (feature) {
+									return {
+										"color": "#ff7800",
+										"weight": 5,
+										"opacity": 0.65
+									};
+								},
+								onEachFeature: function (feature, layer) {
+									layer.bindPopup(feature.properties.description);
+								}
+							}).addTo(internal.map);
 						});
-					},
-
-					add_cursor: function(){
-						my_geometry = new THREE.SphereGeometry(1, 6, 6);
-
-						internal.cursor = new THREE.Mesh(my_geometry, new THREE.MeshLambertMaterial({color:0xff0000,emissive: 0xff0000}));
-						internal.scene.add(internal.cursor);
-
+						
 					},
 
 					animate: function(frame_time){
 						var delta;
 						delta = frame_time - internal.last_frame;
 						internal.last_frame = frame_time;
+						internal.stats.begin();
 						internal.animation_frame_id = requestAnimationFrame( fn.animate );
 						fn.draw(delta);
 					},
 
-					draw: function(delta){
-						elements.frame_id.text(internal.animation_frame_id);
-						
-
-						// find intersections
-						var INTERSECTED;
-						
-						//console.log(vector);
-
-						internal.camera.lookAt(internal.scene.position);
-
-						//internal.controls.update(delta);
-						internal.renderer.render(internal.scene, internal.camera);
+					draw: function(){
+						internal.canvasTiles.redraw();
+						internal.stats.end();
 					}
 				};
 
@@ -279,72 +270,16 @@
 						}
 					},
 					resize: function(){
-						internal.renderer.setSize(elements.window.width(), elements.window.height());
-						internal.camera.aspect = elements.window.width() / elements.window.height();
-					},
-					document_mousemove: function(e,d){
-
-				//		var vector = new THREE.Vector3( 
-				//			( e.clientX / internal.renderer.domElement.width ) * 2 - 1,
-				//			- ( e.clientY / internal.renderer.domElement.height ) * 2 + 1,
-				//			0.5
-				//		);
-//
-				//		//var mouse3d = internal.projector.unprojectVector(vector, internal.camera);
-//
-				//		var _projScreenMatrix = new THREE.Matrix4();
-//
-				//		internal.camera.projectionMatrixInverse.getInverse( internal.camera.projectionMatrix );
-				//		_projScreenMatrix.multiply( internal.camera.matrixWorld, internal.camera.projectionMatrixInverse );
-				//		_projScreenMatrix.multiplyVector3( vector );
-//
-				//		console.log(vector);
-
-						var vector2 = new THREE.Vector3( 
-							e.clientX,
-							-e.clientY,
-							0.5
-						);
-
-						console.log(vector2)
-
-
-						var _projScreenMatrix = new THREE.Matrix4();
-
-						internal.camera.projectionMatrixInverse.getInverse( internal.camera.projectionMatrix );
-						_projScreenMatrix.multiply( internal.camera.matrixWorld, internal.camera.projectionMatrixInverse );
-						_projScreenMatrix.multiplyVector3( vector2 );
-
-						console.log(vector2);
-
-
-
-
-						internal.cursor.position.x = vector2.x-5;
-						internal.cursor.position.y = vector2.y-5;
-						internal.cursor.position.z = vector2.z-5;
 						
-						console.log(internal.cursor.position);
-						//var ray = new THREE.Ray( internal.camera.position, mouse3d.subSelf( internal.camera.position ).normalize() );
-						//var intersects = ray.intersectObjects( internal.balloons.objects );
-						//console.log(intersects);
 					}
 				};
 
 				jQuery(window).bind('keypress', {}, handlers.keypress);
 				jQuery(window).bind('resize', {}, handlers.resize);
-				jQuery(document).bind('mousemove', {}, handlers.document_mousemove);
 
 				o.app.events.bind('app.featuresInitialized', {}, function(){
 					fn.init();
-					fn.add_origin();
-					fn.add_uk_boundary();
-					fn.add_wall();
-					fn.add_balloons();
-					fn.add_cursor();
 					fn.animate();
-					internal.renderer.setSize(elements.window.width(), elements.window.height());
-					internal.camera.aspect = elements.window.width() / elements.window.height();
 				});
 				
 				console.log(internal);
@@ -352,7 +287,7 @@
 			};
 
 			window.page.features.push(function(app){
-				app.runtime.viz = new Viz_One({
+				app.runtime.viz = new Viz_Two({
 					app: app,
 					$e: $('#application'),
 					width: $(window).width(),
