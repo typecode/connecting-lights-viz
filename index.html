@@ -323,8 +323,8 @@
 
 						internal.map = L.map('application');
 
-						fn.generate_particles(10);
 						fn.prepare_point_mapper();
+						fn.generate_particles(500);
 
 						wax.tilejson('http://a.tiles.mapbox.com/v3/zlieberm.connecting-lights-0.jsonp', function(tilejson) {
 							var wax_leaf;
@@ -332,46 +332,67 @@
 							wax_leaf.addTo(internal.map);
 						});
 
-						/*
-
-						L.tileLayer('static/map_tms_/1.0.0/ConnectingLights/{z}/{x}/{y}.png', {
-							errorTileUrl: 'static/map_tms_/error_tile.png',
-							minZoom:9,
-							maxZoom: 15,
-							tms:true
-						}).addTo(internal.map);
-
-						*/
-
 						internal.map.setView([54.9839, -2.3291], 10);
 
-						internal.canvasTiles = new L.TileLayer.Canvas({
-							
-						});
-						internal.canvasTiles.drawTile = fn.drawTile;
-						internal.canvasTiles.addTo(internal.map);
-						internal.canvasTiles.bringToFront();
+
+					//	internal.canvasTiles = new L.TileLayer.Canvas({});
+					//	internal.canvasTiles.drawTile = fn.drawTile;
+					//	internal.canvasTiles.addTo(internal.map);
+					//	internal.canvasTiles.bringToFront();
 
 					},
 
-					generate_particles: function(n_particles){
-						var parameters, i, my_color;
+					prepare_point_mapper: function(){
+						var i, total_distance, distance_thus_far;
+						internal.point_mapper.n_points = internal.point_mapper.points.length;
+						total_distance = 0;
+						for(i = 0; i < internal.point_mapper.n_points; i++){
+							if(i > 0){
+								total_distance += fn.distance(internal.point_mapper.points[i-1], internal.point_mapper.points[i]);
+							}
+						}
+						distance_thus_far = 0;
+						for(i = 0; i < internal.point_mapper.n_points; i++){
+							if(i > 0){
+								distance_thus_far += fn.distance(internal.point_mapper.points[i-1], internal.point_mapper.points[i]);
+							}
+							internal.point_mapper.points[i].push(distance_thus_far/total_distance);
+						}
+					},
 
-						parameters = {
-							bounds: new L.LatLngBounds(new L.LatLng(54.7516,-3.5898), new L.LatLng(55.1804,-1.0849))
-						};
+					distance: function(point1, point2){
+						var xs, ys;
+						
+						xs = point2[0] - point1[0];
+						xs = xs * xs;
+						
+						ys = point2[1] - point1[1];
+						ys = ys * ys;
+						
+						return Math.sqrt( xs + ys );
+					},
+
+					generate_particles: function(n_particles){
+						var i, my_color, my_particle;
 
 						for(i = 0; i < n_particles; i++){
-
 							my_color = (new d3.hsl((Math.random()*360), 1, 0.60)).rgb();
-
-							internal.particles.push({
+							my_particle = {
 								color: 'rgba('+my_color.r+','+my_color.g+','+my_color.b+','+0.6+')',
 								lat_lng: null,
 								position_on_line: Math.random(0),
-								velocity: (Math.random() * 0.0008) - 0.0004,
-								last_positions: []
-							});
+								velocity: (Math.random() * 0.00001),
+								layer: null
+							};
+							my_particle.lat_lng = fn.map_position(my_particle.position_on_line);
+							my_particle.layer = L.circle(my_particle.lat_lng, 300, {
+									stroke: false,
+									fillColor: my_particle.color,
+									fillOpacity: 0.75
+								}
+							).addTo(internal.map);
+							console.log(my_particle.layer);
+							internal.particles.push(my_particle);
 						}
 					},
 
@@ -389,15 +410,49 @@
 									my_particle.position_on_line = 1;
 								}
 							}
-							//if(internal.animation_frame_id % 5 == 0){
-							//	my_particle.last_positions.unshift(my_particle.lat_lng);
-							//	if(my_particle.last_positions.length > 5){
-							//		my_particle.last_positions.pop();
-							//	}
-							//}
 							my_particle.lat_lng = fn.map_position(my_particle.position_on_line, (my_particle.velocity > 0 ? 1 : -1));
-
+							my_particle.layer.setLatLng(my_particle.lat_lng);
 						}
+					},
+
+					map_position: function(pct, vector){
+						var i, lat_lng, points, closest_point, pct_between;
+
+						points = internal.point_mapper.points;
+
+						for(i = 0; i < internal.point_mapper.n_points; i++){
+							if(internal.point_mapper.points[i][2] > pct){
+								closest_point = i;
+								if(vector < 0){
+									next_closest_point = i - 1;
+								} else {
+									next_closest_point = i + 1;
+								}
+								break;
+							}
+						}
+
+
+						if(!closest_point){
+							closest_point = internal.point_mapper.n_points-1;
+						}
+
+						if(points[closest_point] && points[next_closest_point]){
+							pct_between = (pct - points[closest_point][2]) / (points[next_closest_point][2] - points[closest_point][2]);
+							lat_lng = new L.LatLng(
+								points[closest_point][1] - ((pct_between) * (points[closest_point][1] - points[next_closest_point][1])),
+								points[closest_point][0] - ((pct_between) * (points[closest_point][0] - points[next_closest_point][0]))
+							);						
+						} else {
+							lat_lng = new L.LatLng(
+								points[closest_point][1],
+								points[closest_point][0]
+							);						
+						}
+						return lat_lng;
+						
+
+						
 					},
 
 					drawTile: function(canvas, tilePoint, zoom){
@@ -420,43 +475,6 @@
 							fn.draw_particle(ctx, particles_to_draw[i]);
 
 						}
-
-						/*
-						my_image_data = ctx.context.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
-						for(i = 3; i < my_image_data.data.length; i+=4){
-							my_image_data.data[i] = my_image_data.data[i] * 0.99;
-						}
-						ctx.context.putImageData(my_image_data, 0, 0);
-						*/
-
-					},
-
-					draw_particle: function(ctx, particle){
-						var style, geom, i;
-						style = {
-							color: particle.color,
-							radius: 5
-						};
-						geom = particle.lat_lng;
-						fn.draw_dot(style, ctx, geom);
-
-						//for(i = 0; i < particle.last_positions.length; i ++){
-						//	geom = particle.last_positions[i];
-						//	fn.draw_dot(style, ctx, geom);
-						//}
-					},
-
-					draw_dot: function(style, ctx, geom){
-						var p, c, g;
-						p = this.get_tile_point(ctx, geom);
-						c = ctx.canvas;
-						g = ctx.context;
-						g.beginPath();
-						g.fillStyle = style.color;
-						g.arc(p.x, p.y, style.radius, 0, Math.PI * 2);
-						g.closePath();
-						g.fill();
-						g.restore();
 					},
 
 					get_canvas_bounds: function(ctx, buf){
@@ -500,6 +518,29 @@
 						return output;
 					},
 
+					draw_particle: function(ctx, particle){
+						var style, geom, i;
+						style = {
+							color: particle.color,
+							radius: 5
+						};
+						geom = particle.lat_lng;
+						fn.draw_dot(style, ctx, geom);
+					},
+
+					draw_dot: function(style, ctx, geom){
+						var p, c, g;
+						p = this.get_tile_point(ctx, geom);
+						c = ctx.canvas;
+						g = ctx.context;
+						g.beginPath();
+						g.fillStyle = style.color;
+						g.arc(p.x, p.y, style.radius, 0, Math.PI * 2);
+						g.closePath();
+						g.fill();
+						g.restore();
+					},
+
 					get_tile_point: function(ctx, coords){
 						// start coords to tile 'space'
 						var s = ctx.tile.multiplyBy(o.tileSize);
@@ -515,61 +556,6 @@
 							y: y
 						};
 					},
-
-
-
-
-					prepare_point_mapper: function(){
-						var i;
-						internal.point_mapper.n_points = internal.point_mapper.points.length;
-						for(i = 0; i < internal.point_mapper.n_points; i++){
-							internal.point_mapper.points[i].push(i/internal.point_mapper.n_points);
-						}
-					},
-
-					map_position: function(pct, vector){
-						var i, lat_lng, points, closest_point, pct_between;
-
-						points = internal.point_mapper.points;
-
-						for(i = 0; i < internal.point_mapper.n_points; i++){
-							if(internal.point_mapper.points[i][2] > pct){
-								closest_point = i;
-								if(vector < 0){
-									next_closest_point = i - 1;
-								} else {
-									next_closest_point = i + 1;
-								}
-								break;
-							}
-						}
-
-
-						if(!closest_point){
-							closest_point = internal.point_mapper.n_points-1;
-						}
-
-						pct_between = (pct - points[closest_point][2]) / (points[next_closest_point][2] - points[closest_point][2]);
-						if(vector < 0){
-							lat_lng = new L.LatLng(
-								points[closest_point][1] - ((pct_between) * (points[closest_point][1] - points[next_closest_point][1])),
-								points[closest_point][0] - ((pct_between) * (points[closest_point][0] - points[next_closest_point][0]))
-							);
-						} else {
-							lat_lng = new L.LatLng(
-								points[next_closest_point][1] - ((pct_between) * (points[closest_point][1] - points[next_closest_point][1])),
-								points[next_closest_point][0] - ((pct_between) * (points[closest_point][0] - points[next_closest_point][0]))
-							);
-						}
-						
-
-						return lat_lng;
-					},
-
-
-
-
-
 
 					add_json_layers: function(){
 						if(o.draw_hadrians_wall){
@@ -606,10 +592,7 @@
 								}).addTo(internal.map);
 							});
 						}
-
 					},
-
-
 
 					animate: function(frame_time){
 						var delta;
@@ -622,8 +605,8 @@
 
 					draw: function(){
 						fn.update_particles();
-						internal.canvasTiles.redraw();
-						internal.canvasTiles.bringToFront();
+						//internal.canvasTiles.redraw();
+						//internal.canvasTiles.bringToFront();
 						internal.stats.end();
 						elements.n_particles.text(internal.particles.length);
 					}
