@@ -326,7 +326,7 @@
 						fn.prepare_point_mapper();
 						fn.generate_particles(500);
 
-						wax.tilejson('http://a.tiles.mapbox.com/v3/zlieberm.connecting-lights-0.jsonp', function(tilejson) {
+						wax.tilejson('http://a.tiles.mapbox.com/v3/zlieberm.ConnectingLights.jsonp', function(tilejson) {
 							var wax_leaf;
 							wax_leaf = new wax.leaf.connector(tilejson);
 							wax_leaf.addTo(internal.map);
