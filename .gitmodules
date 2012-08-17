@@ -16,3 +16,6 @@
 [submodule "static/js/lib/stats.js"]
 	path = static/js/lib/stats.js
 	url = git://github.com/mrdoob/stats.js.git
+[submodule "static/js/lib/modestmaps-js"]
+	path = static/js/lib/modestmaps-js
+	url = https://github.com/stamen/modestmaps-js/
