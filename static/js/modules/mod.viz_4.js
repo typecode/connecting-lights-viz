@@ -102,11 +102,11 @@ var Viz_Four = function(options) {
 		reset: function(){
 		//	var bottomLeft = fn.project(bounds[0]),
 		//		topRight = fn.project(bounds[1]);
-		
-			internal.viz.attr("width", topRight[0] - bottomLeft[0])
-				.attr("height", bottomLeft[1] - topRight[1])
-				.style("margin-left", bottomLeft[0] + "px")
-				.style("margin-top", topRight[1] + "px");
+
+		//	internal.viz.attr("width", topRight[0] - bottomLeft[0])
+		//		.attr("height", bottomLeft[1] - topRight[1])
+		//		.style("margin-left", bottomLeft[0] + "px")
+		//		.style("margin-top", topRight[1] + "px");
 		},
 
 		animate: function(frame_time){
@@ -135,10 +135,15 @@ var Viz_Four = function(options) {
 			}
 		},
 		resize: function(){
-			internal.$e.css({
-				'height': $(window).height() + 'px',
-				'width': $(window).width() + 'px'
-			});
+		//	internal.$e.css({
+		//		'height': $(window).height() + 'px',
+		//		'width': $(window).width() + 'px'
+		//	});
+
+		//	internal.viz.css({
+		//		'height': $(window).height() + 'px',
+		//		'width': $(window).width() + 'px'
+		//	});
 		}
 	};
 
