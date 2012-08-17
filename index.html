@@ -410,43 +410,35 @@
 									my_particle.position_on_line = 1;
 								}
 							}
-							my_particle.lat_lng = fn.map_position(my_particle.position_on_line, (my_particle.velocity > 0 ? 1 : -1));
+							my_particle.lat_lng = fn.map_position(my_particle.position_on_line);
 							my_particle.layer.setLatLng(my_particle.lat_lng);
 						}
 					},
-
-					map_position: function(pct, vector){
-						var i, lat_lng, points, closest_point, pct_between;
+					
+					map_position: function(pct){
+						var i, lat_lng, points, pta, ptb;
 
 						points = internal.point_mapper.points;
 
-						for(i = 0; i < internal.point_mapper.n_points; i++){
-							if(internal.point_mapper.points[i][2] > pct){
-								closest_point = i;
-								if(vector < 0){
-									next_closest_point = i - 1;
-								} else {
-									next_closest_point = i + 1;
-								}
+						for(i = 0; i < (internal.point_mapper.n_points - 1); i++){
+							if( pct >= internal.point_mapper.points[i][2] && pct <= internal.point_mapper.points[i+1][2]){
+								pta = i;
+								ptb = i + 1;
 								break;
 							}
 						}
 
-
-						if(!closest_point){
-							closest_point = internal.point_mapper.n_points-1;
-						}
-
-						if(points[closest_point] && points[next_closest_point]){
-							pct_between = (pct - points[closest_point][2]) / (points[next_closest_point][2] - points[closest_point][2]);
+						if(points[pta] && points[ptb]){
+							pct_between = (pct - points[pta][2]) / (points[ptb][2] - points[pta][2]);
+							
 							lat_lng = new L.LatLng(
-								points[closest_point][1] - ((pct_between) * (points[closest_point][1] - points[next_closest_point][1])),
-								points[closest_point][0] - ((pct_between) * (points[closest_point][0] - points[next_closest_point][0]))
+								points[pta][1] + ((pct_between) * (points[ptb][1] - points[pta][1])),
+								points[pta][0] + ((pct_between) * (points[ptb][0] - points[pta][0]))
 							);						
 						} else {
 							lat_lng = new L.LatLng(
-								points[closest_point][1],
-								points[closest_point][0]
+								points[pta][1],
+								points[pta][0]
 							);						
 						}
 						return lat_lng;
