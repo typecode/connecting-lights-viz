@@ -1,1 +1,4 @@
 #n-particles { position: fixed; bottom:10px; left: 10px; color:white; z-index:99999;}
+
+#viz_layer { border:1px solid green;}
+div.balloon { display:block; color:red; height:10px; width:10px;}
