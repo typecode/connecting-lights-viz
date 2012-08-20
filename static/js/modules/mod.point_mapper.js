@@ -12,7 +12,8 @@ var PointMapper = function(options){
 		name:'Module.PointMapper',
 		$e:(o.$e ? o.$e : $(o.selector)),
 		n_points: null,
-		points: POINT_MAPPER_POINTS
+		points: POINT_MAPPER_POINTS,
+		cached_positions: []
 	};
 
 	elements = {
@@ -56,35 +57,42 @@ var PointMapper = function(options){
 
 		map_position: function(pct){
 			var i, lat_lng, points, pta, ptb;
+			//if(internal.cached_positions[pct]){
+			//	console.log('found in cache');
+			//} else {
+				points = internal.points;
 
-			points = internal.points;
-
-			for(i = 0; i < (internal.n_points - 1); i++){
-				if( pct >= internal.points[i][2] && pct <= internal.points[i+1][2]){
-					pta = i;
-					ptb = i + 1;
-					break;
+				for(i = 0; i < (internal.n_points - 1); i++){
+					if( pct >= points[i][2] && pct <= points[i+1][2]){
+						pta = i;
+						ptb = i + 1;
+						break;
+					}
 				}
-			}
 
-			if(points[pta] && points[ptb]){
-				pct_between = (pct - points[pta][2]) / (points[ptb][2] - points[pta][2]);
+				if(points[pta] && points[ptb]){
+					pct_between = (pct - points[pta][2]) / (points[ptb][2] - points[pta][2]);
+					lat_lng = new L.LatLng(
+						points[pta][1] + ((pct_between) * (points[ptb][1] - points[pta][1])),
+						points[pta][0] + ((pct_between) * (points[ptb][0] - points[pta][0]))
+					);
+				} else {
+					lat_lng = new L.LatLng(
+						points[pta][1],
+						points[pta][0]
+					);
+				}
 				
-				lat_lng = new L.LatLng(
-					points[pta][1] + ((pct_between) * (points[ptb][1] - points[pta][1])),
-					points[pta][0] + ((pct_between) * (points[ptb][0] - points[pta][0]))
-				);
-			} else {
-				lat_lng = new L.LatLng(
-					points[pta][1],
-					points[pta][0]
-				);
-			}
+			//}
+
 			return lat_lng;
 		}
+
+			
 	};
 
 	this.map_position = fn.map_position;
+	this.update_pixel_mapping = fn.update_pixel_mapping;
 
 	fn.init();
 };
