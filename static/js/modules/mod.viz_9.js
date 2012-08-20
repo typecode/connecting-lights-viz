@@ -1,8 +1,4 @@
-
-
-
-
-var Viz_Five = function(options) {
+var Viz_Nine = function(options) {
 		
 	var o, internal, elements, fn, handlers;
 	
@@ -20,7 +16,7 @@ var Viz_Five = function(options) {
 	}, options);
 	
 	internal = {
-		name:'Module.Viz_Five',
+		name:'Module.Viz_Nine',
 		$e:(o.$e ? o.$e : $(o.selector)),
 		messages: [],
 		animation_frame_id:null,
@@ -47,19 +43,21 @@ var Viz_Five = function(options) {
 			var cloudmadeUrl = 'http://a.tiles.mapbox.com/v3/zlieberm.map-gt6pmdco/{z}/{x}/{y}.png',
 				cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
 				cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18, attribution: cloudmadeAttribution}),
-				pm = new PointMapper(),
-				latlng = pm.map_position(0.5), //new L.LatLng(54.971671, -2.325199),
+				latlng = internal.point_mapper.map_position(0.5), //new L.LatLng(54.971671, -2.325199),
 				bounds = new L.LatLngBounds(new L.LatLng(55.50206, -4.502565), new L.LatLng(53.989347, -0.748958));
 
 			internal.map = new L.Map('application', {center: latlng, zoom: 6, layers: [cloudmade], maxBounds: bounds});
 
-			internal.message_provider.register_callback(fn.message_added);
+			internal.map.on('viewreset moveend dragend zoomend', function(e){
+				fn.update_bounds(internal.map.getBounds());
+			});
 
+			internal.message_provider.register_callback(fn.message_added);
 		},
 
 		setup_stats: function(){
 			internal.stats.setMode(0); // 0: fps, 1: ms
-			internal.stats.domElement.style.position = 'absolute';
+			internal.stats.domElement.style.position = 'fixed';
 			internal.stats.domElement.style.right = '0px';
 			internal.stats.domElement.style.top = '0px';
 			internal.stats.domElement.style.zIndex = '10000';
@@ -68,13 +66,18 @@ var Viz_Five = function(options) {
 
 		message_added: function(message){
 			message.lat_lng = internal.point_mapper.map_position(message.position_on_line);
-			message.marker = new ImageOverlay(internal.point_mapper.map_position(message.position_on_line));
+			message.marker = new ImageOverlay(message);
 			internal.map.addLayer(message.marker);
 			internal.messages.push(message);
 		},
 
+		update_bounds: function(bounds){
+			internal.point_mapper.set_bounds(bounds);
+		},
+
 		update_particles: function(){
-			var i, my_particle;
+			var i, my_bounds, my_particle, my_latlng;
+			my_bounds = internal.map.getBounds();
 			for(i = 0; i < internal.messages.length; i++){
 				my_particle = internal.messages[i];
 				my_particle.position_on_line = my_particle.position_on_line + my_particle.velocity;
@@ -87,9 +90,12 @@ var Viz_Five = function(options) {
 						my_particle.position_on_line = 1;
 					}
 				}
-				my_particle.lat_lng = internal.point_mapper.map_position(my_particle.position_on_line);
-				my_particle.marker._latlng = my_particle.lat_lng;
-				my_particle.marker.update();
+				
+				my_latlng = internal.point_mapper.map_position(my_particle.position_on_line);
+				if(my_latlng){
+					my_particle.marker._latlng = my_latlng;
+					my_particle.marker.update();
+				}
 			}
 		},
 

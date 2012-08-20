@@ -16,7 +16,7 @@ var Viz_Eight = function(options) {
 	}, options);
 	
 	internal = {
-		name:'Module.Viz_Three',
+		name:'Module.Viz_Eight',
 		$e:(o.$e ? o.$e : $(o.selector)),
 		messages: [],
 		animation_frame_id:null,

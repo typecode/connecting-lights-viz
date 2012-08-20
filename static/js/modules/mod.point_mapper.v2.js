@@ -61,14 +61,14 @@ var PointMapper = function(options){
 			lowest_visible = null;
 			highest_visible = null;
 			for(i = 0; i < internal.points.length; i++){
-				if(internal.points[i][0] > bounds._southWest.lng && !lowest_visible){
+				if(internal.points[i][0] > bounds.getSouthWest().lng() && !lowest_visible){
 					if(i === 0){
 						lowest_visible = 0;
 					} else {
 						lowest_visible = internal.points[i][2];
 					}
 				}
-				if(internal.points[i][0] > bounds._northEast.lng && !highest_visible){
+				if(internal.points[i][0] > bounds.getNorthEast().lng() && !highest_visible){
 					highest_visible = internal.points[i][2];
 				}
 			}
@@ -97,15 +97,15 @@ var PointMapper = function(options){
 
 			if(points[pta] && points[ptb]){
 				pct_between = (pct - points[pta][2]) / (points[ptb][2] - points[pta][2]);
-				lat_lng = new L.LatLng(
+				lat_lng = [
 					points[pta][1] + ((pct_between) * (points[ptb][1] - points[pta][1])),
 					points[pta][0] + ((pct_between) * (points[ptb][0] - points[pta][0]))
-				);
+				];
 			} else {
-				lat_lng = new L.LatLng(
+				lat_lng = [
 					points[pta][1],
 					points[pta][0]
-				);
+				];
 			}
 
 			return lat_lng;
