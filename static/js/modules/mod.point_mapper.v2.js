@@ -27,7 +27,11 @@ var PointMapper = function(options){
 		},
 
 		prepare_point_mapper: function(){
-			var i, total_distance, distance_thus_far;
+			var i,
+				total_distance,
+				distance_thus_far,
+				bounds;
+
 			internal.n_points = internal.points.length;
 			total_distance = 0;
 			for(i = 0; i < internal.n_points; i++){
@@ -36,12 +40,51 @@ var PointMapper = function(options){
 				}
 			}
 			distance_thus_far = 0;
+			min_max = {
+				name: 'Hadrians Wall Bounds',
+				n:null,
+				s:null,
+				e:null,
+				w:null
+			};
 			for(i = 0; i < internal.n_points; i++){
 				if(i > 0){
 					distance_thus_far += fn.distance(internal.points[i-1], internal.points[i]);
 				}
+
+				if(!min_max.n){
+					min_max.n = internal.points[i][1];
+				} else {
+					if(internal.points[i][1] > min_max.n){
+						min_max.n = internal.points[i][1];
+					}
+				}
+				if(!min_max.s){
+					min_max.s = internal.points[i][1];
+				} else {
+					if(internal.points[i][1] < min_max.s){
+						min_max.s = internal.points[i][1];
+					}
+				}
+				if(!min_max.e){
+					min_max.e = internal.points[i][0];
+				} else {
+					if(internal.points[i][0] > min_max.e){
+						min_max.e = internal.points[i][0];
+					}
+				}
+				if(!min_max.w){
+					min_max.w = internal.points[i][0];
+				} else {
+					if(internal.points[i][0] < min_max.w){
+						min_max.w = internal.points[i][0];
+					}
+				}
+
 				internal.points[i].push(distance_thus_far/total_distance);
 			}
+
+			console.log(min_max);
 		},
 
 		distance: function(point1, point2){

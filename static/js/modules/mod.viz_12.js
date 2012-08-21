@@ -1,4 +1,4 @@
-var Viz_Eleven = function(options) {
+var Viz_Twelve = function(options) {
 		
 	var o, internal, elements, fn, handlers;
 	
@@ -16,13 +16,14 @@ var Viz_Eleven = function(options) {
 	}, options);
 	
 	internal = {
-		name:'Module.Viz_Eleven',
+		name:'Module.Viz_Twelve',
 		$e:(o.$e ? o.$e : $(o.selector)),
 		messages: [],
 		animation_frame_id:null,
 		message_provider: o.message_provider,
 		stats: o.stats,
-		point_mapper: o.point_mapper
+		point_mapper: o.point_mapper,
+		particles_visible: true
 	};
 
 	elements = {
@@ -39,9 +40,13 @@ var Viz_Eleven = function(options) {
 				'height': o.height + 'px',
 				'width': o.width + 'px'
 			});
+
+			var center_lat_lon,
+				image_sw_corner,
+				image_ne_corner,
+				image_bounds;
 		
-			var latlng = internal.point_mapper.map_position(0.5);//,
-				//bounds = new L.LatLngBounds(new L.LatLng(55.50206, -4.502565), new L.LatLng(53.989347, -0.748958));
+			var latlng = internal.point_mapper.map_position(0.5);
 
 			mapOptions = {
 				zoom: 9,
@@ -55,11 +60,20 @@ var Viz_Eleven = function(options) {
 			google.maps.event.addListener(internal.map, 'bounds_changed', function() {
 				fn.update_bounds(internal.map.getBounds());
 			});
+
 			google.maps.event.addListener(internal.map, 'dragend', function() {
 				fn.update_bounds(internal.map.getBounds());
 			});
 
+			google.maps.event.addListener(internal.map, 'zoom_changed', fn.handle_zoom);
+
+			image_sw_corner = new google.maps.LatLng(54.80, -3.25);
+			image_ne_corner = new google.maps.LatLng(55.1, -1.40);
+			image_bounds = new google.maps.LatLngBounds(image_sw_corner, image_ne_corner);
+			internal.image_overlay = new GoogleImageOverlay(image_bounds,'static/img/image_overlay.png', internal.map);
+
 			internal.message_provider.register_callback(fn.message_added);
+			fn.handle_zoom();
 		},
 
 		setup_stats: function(){
@@ -74,7 +88,7 @@ var Viz_Eleven = function(options) {
 		message_added: function(message){
 			message.lat_lng = internal.point_mapper.map_position(message.position_on_line);
 			message.lat_lng = new google.maps.LatLng(message.lat_lng[0], message.lat_lng[1]);
-			message.marker = new GoogleBalloonOverlay(message, internal.map, true);
+			message.marker = new GoogleBalloonOverlay(message,internal.map, internal.map.getZoom() >= 12 ? true : false);
 			internal.messages.push(message);
 		},
 
@@ -82,26 +96,76 @@ var Viz_Eleven = function(options) {
 			internal.point_mapper.set_bounds(bounds);
 		},
 
+		handle_zoom: function() {
+			if(internal.map.getZoom() >= 12){
+				fn.show_messages(function(){
+					internal.image_overlay.hide();
+				});
+			} else {
+				fn.hide_messages(function(){
+					internal.image_overlay.show();
+				});
+				
+			}
+		},
+
+		hide_messages: function(callback){
+			var i;
+			if(!internal.particles_visible){
+				if($.isFunction(callback)){
+					callback();
+				}
+				return;
+			}
+			for(i = 0; i < internal.messages.length; i++){
+				internal.messages[i].marker.hide();
+			}
+			internal.particles_visible = false;
+			if($.isFunction(callback)){
+				callback();
+			}
+		},
+
+		show_messages: function(callback){
+			var i;
+			if(internal.particles_visible){
+				if($.isFunction(callback)){
+					callback();
+				}
+				return;
+			}
+			for(i = 0; i < internal.messages.length; i++){
+				internal.messages[i].marker.show();
+			}
+			internal.particles_visible = true;
+			if($.isFunction(callback)){
+				callback();
+			}
+		},
+
 		update_particles: function(){
-			var i, my_bounds, my_particle, my_latlng;
+			var i, my_bounds, my_message, my_latlng;
 			my_bounds = internal.map.getBounds();
 			for(i = 0; i < internal.messages.length; i++){
-				my_particle = internal.messages[i];
-				my_particle.position_on_line = my_particle.position_on_line + my_particle.velocity;
-				if(my_particle.position_on_line < 0 || my_particle.position_on_line > 1){
-					my_particle.velocity = my_particle.velocity * -1;
-					if(my_particle.position_on_line < 0){
-						my_particle.position_on_line = 0;
+				my_message = internal.messages[i];
+				my_message.position_on_line = my_message.position_on_line + my_message.velocity;
+				if(my_message.position_on_line < 0 || my_message.position_on_line > 1){
+					my_message.velocity = my_message.velocity * -1;
+					if(my_message.position_on_line < 0){
+						my_message.position_on_line = 0;
 					}
-					if(my_particle.position_on_line > 1){
-						my_particle.position_on_line = 1;
+					if(my_message.position_on_line > 1){
+						my_message.position_on_line = 1;
 					}
 				}
-				
-				my_latlng = internal.point_mapper.map_position(my_particle.position_on_line);
-				if(my_latlng){
-					my_particle.marker.setPosition(new google.maps.LatLng(my_latlng[0], my_latlng[1]));
+
+				if(internal.particles_visible){
+					my_latlng = internal.point_mapper.map_position(my_message.position_on_line);
+					if(my_latlng){
+						my_message.marker.setPosition(new google.maps.LatLng(my_latlng[0], my_latlng[1]));
+					}
 				}
+
 			}
 		},
 
