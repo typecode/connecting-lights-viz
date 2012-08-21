@@ -1,0 +1,120 @@
+<!doctype html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Prototyping</title>
+		<link rel="stylesheet" href="static/css/reset.css">
+		<link rel="stylesheet" href="static/css/booklr.css">
+		<link rel="stylesheet" href="static/css/connected_lights.css">
+
+		<!-- Type/Code Libraries -->
+		<script type='text/javascript' src='static/js/lib/typecode-js/lib/tc.seed.js'></script>
+
+		<!-- Application Page -->
+		<script type='text/javascript'>
+			window.console = NI.app.getConsole(true);
+			window.page = {
+				modules: {},
+				features: []
+			};
+			window.onunload = function(){}; // fixes back-button problems in safari and ff
+		</script>
+
+	</head>
+
+	<body>
+		<div id='application' class="app-wrap"></div>
+		<p id='n-particles'></p>
+
+		<!-- jQuery & Other Libraries -->
+		<script src='static/js/lib/jquery-1.7.2.min.js'></script>
+
+		<!-- d3.js -->
+		<script src='static/js/lib/d3/d3.v2.js'></script>
+
+		<!-- three.js
+		<script src='static/js/lib/three.js/build/Three.js'></script>
+		 -->
+
+		<!-- threex 
+		<script src='static/js/lib/threex/threex.domevent.js'></script>
+		<script src='static/js/lib/threex/threex.domevent.object3d.js'></script> -->
+
+		<!-- d3-threeD
+		<script src='static/js/lib/d3-threeD/lib/d3-threeD.js'></script>
+		 -->
+
+
+		<!-- leaflet
+		<script>window.L_DISABLE_3D = true</script>
+		<script src='static/js/lib/leaflet/dist/leaflet.js'></script>
+		<link rel="stylesheet" href="static/js/lib/leaflet/dist/leaflet.css">
+		 -->
+
+		<!-- leaflet: TileLayer.TileJSON.js
+		<script src='static/js/lib/TileLayer.TileJSON.js'></script>
+		 -->
+
+		<!-- leaflet: Mapbox.Waxjs
+		<script src='static/js/lib/mapbox-wax/dist/wax.leaf.js'></script>
+		 -->
+
+
+		<!-- modest maps
+		<script src='static/js/lib/modestmaps-js/modestmaps.js'></script>
+		 -->
+
+		 <!-- google maps -->
+		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+		
+
+
+		<!-- stats.js -->
+		<script src='static/js/lib/stats.js/build/Stats.js'></script>
+
+		<!-- geo-util from http://www.smartjava.org/examples/threed3s/
+		<script src='static/js/lib/geo-util.js'></script>
+		 -->
+
+		<!-- Type/Code Libraries -->
+		<script src='static/js/lib/typecode-js/lib/tc.app.js'></script>
+		<!-- <script src='static/js/lib/typecode-js/lib/tc.overlay.js'></script> -->
+
+		<!-- Site-wide Application Modules -->
+		<script src='static/js/modules/mod.util.js'></script>
+		<script src='static/js/modules/mod.point_mapper_points.js'></script>
+		<script src='static/js/modules/mod.point_mapper.v2.js'></script>
+		<script src='static/js/modules/mod.message_provider.js'></script>
+		<script src='static/js/modules/mod.overlay.google.js'></script>
+		<script src='static/js/modules/mod.viz_2.js'></script>
+		<script src='static/js/modules/mod.viz_3.js'></script>
+		<script src='static/js/modules/mod.viz_4.js'></script>
+		<script src='static/js/modules/mod.viz_5.js'></script>
+		<script src='static/js/modules/mod.viz_8.js'></script>
+		<script src='static/js/modules/mod.viz_9.js'></script>
+		<script src='static/js/modules/mod.viz_10.js'></script>
+		<script src='static/js/modules/mod.viz_11.js'></script>
+		
+		<!-- Application -->
+		<script type='text/javascript'>
+			window.page.features.push(function(app){
+				app.runtime.viz = new Viz_Eleven({
+					app: app,
+					$e: $('#application'),
+					width: $(window).width(),
+					height: $(window).height()
+				});
+			});
+			
+			jQuery(document).bind('ready',function(){
+				window.app = new NI.App({
+					page: window.page
+				});
+			});
+
+		</script>
+
+	</body>
+
+</html>

@@ -1,39 +1,65 @@
-// var ImageOverlayGoogle = L.Class.extend({
+function GoogleBalloonOverlay(message) {
+	this._message = message;
+	this._latlng = message.lat_lng;
+	this.div_ = null;
+}
 
-// 	initialize: function (message) {
-// 		// save position of the layer or any options from the constructor
-// 		this._message = message;
-// 		this._latlng = message.lat_lng;
-// 	},
+GoogleBalloonOverlay.prototype = new google.maps.OverlayView();
 
-// 	onAdd: function (map) {
-// 		this._map = map;
-// 		this._el = L.DomUtil.create('div', 'leaflet-zoom-hide');
-// 		this._el.style.background = 'url(static/img/dot_32.png) transparent';
-// 		//this._el.style.backgroundSize = '32px 32px';
-// 		this._el.style.position = 'absolute';
-// 		this._el.style.display = 'block';
-// 		this._el.style.width = "32px";
-// 		this._el.style.height = "32px";
-// 		this._el.style.webkitTransformOrigin = "32px 32px";
-// 		map.getPanes().overlayPane.appendChild(this._el);
-// 		map.on('viewreset', this._reset, this);
-// 		this._reset();
-// 	},
+GoogleBalloonOverlay.prototype.onAdd = function() {
+	var _me;
+	_me = this;
+	var div = document.createElement('div');
+	div.style.background = 'url(static/img/dot_32.png) transparent';
+	div.style.position = 'absolute';
+	div.style.display = 'block';
+	div.style.width = "32px";
+	div.style.height = "32px";
+	div.style.webkitTransformOrigin = "32px 32px";
+	this.div_ = div;
+	var panes = this.getPanes();
+	panes.overlayLayer.appendChild(div);
+};
 
-// 	update: function(){
-// 		var pos = this._map.latLngToLayerPoint(this._latlng);
-// 		L.DomUtil.setPosition(this._el, pos);
-// 	},
+GoogleBalloonOverlay.prototype.setPosition = function(lat_lng){
+	this._latlng = lat_lng;
+	this.draw();
+};
 
-// 	onRemove: function (map) {
-// 		// remove layer's DOM elements and listeners
-// 		map.getPanes().overlayPane.removeChild(this._el);
-// 		map.off('viewreset', this._reset, this);
-// 	},
+GoogleBalloonOverlay.prototype.draw = function() {
+	var projection, position;
+	projection = this.getProjection();
+	if(projection && this.div_){
+		position = projection.fromLatLngToDivPixel(this._latlng);
+		this.div_.style.left = position.x + 'px';
+		this.div_.style.top = position.y + 'px';
+	}
+	
+};
 
-// 	_reset: function () {
-// 		var pos = this._map.latLngToLayerPoint(this._latlng);
-// 		L.DomUtil.setPosition(this._el, pos);
-// 	}
-// });
+GoogleBalloonOverlay.prototype.onRemove = function() {
+	this.div_.parentNode.removeChild(this.div_);
+	this.div_ = null;
+};
+
+GoogleBalloonOverlay.prototype.hide = function() {
+	if (this.div_) {
+		this.div_.style.visibility = "hidden";
+	}
+};
+
+GoogleBalloonOverlay.prototype.show = function() {
+	if (this.div_) {
+		this.div_.style.visibility = "visible";
+	}
+};
+
+GoogleBalloonOverlay.prototype.toggle = function() {
+	if (this.div_) {
+		if (this.div_.style.visibility == "hidden") {
+			this.show();
+		} else {
+			this.hide();
+		}
+	}
+};
